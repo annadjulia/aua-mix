@@ -1,0 +1,53 @@
+<div class="col-md-7 col-lg-8">
+    <h4 class="mb-3 roxo">Cadastre um animal</h4>
+    <form class="needs-validation" action="/cadastroAnimais" method="post">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label roxo">Nome do animal</label>
+          <input type="text" name="nome" class="form-control shadow" placeholder="Nome" required>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label roxo">Espécie do animal</label>
+            <input type="text" name="especie" class="form-control shadow" placeholder="Espécie" required>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label roxo">Tamanho do animal</label>
+            <div class="my-2">
+                <div class="form-check">
+                  <input name="tamanho" type="radio" class="form-check-input" value=1 checked required>
+                  <label class="form-check-label roxo">Porte pequeno</label>
+                </div>
+                <div class="form-check">
+                  <input name="tamanho" type="radio" class="form-check-input" value=2 required>
+                  <label class="form-check-label roxo">Porte médio</label>
+                </div>
+                <div class="form-check">
+                  <input name="tamanho" type="radio" class="form-check-input" value=3 required>
+                  <label class="form-check-label roxo">Porte grande</label>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label roxo">Idade do animal</label>
+            <input type="number" name="idade" class="form-control shadow" placeholder="Idade" required>
+        </div>
+    
+        <div class="col-12">
+            <label class="form-label roxo">Características do animalzinho</label>
+            <input type="text" name="caracteristicas" class="form-control shadow" placeholder="Características" required>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label roxo">Foto do animalzinho</label>
+            <input id="img-input" type="file" name="foto" accept="image/*" required>
+        </div>
+        <div class="row">
+          <img id="preview" src="">
+        </div>
+
+      <button class="w-100 btn btn-primary btn-lg mb-3 lara" type="submit">Cadastrar animalzinho</button>
+    </form>
+  </div>

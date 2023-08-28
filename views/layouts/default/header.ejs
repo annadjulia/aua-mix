@@ -1,0 +1,44 @@
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between headCor py-3 px-4 mb-4 border-bottom bgwt">
+  <div class="container">
+    <div class="row justify-content-between align-content-center">
+      <div class="col-auto align-content-center d-flex" style="flex-wrap: inherit;">
+        <img src="/media/minilogo.png" alt="Adote Um Amigo" class="img-fluid logo" style="height: 4vw;">
+      </div>
+  
+      <ul class="nav col-auto justify-content-between align-content-center">
+        <li><a href="/" class="nav-link px-4 roxo">Home</a></li>
+        <li><a href="/animais" class="nav-link px-4 roxo">Animais</a></li>
+        <li><a href="/sobre" class="nav-link px-4 roxo">Sobre</a></li>
+      </ul>
+  
+      <div class="col-auto justify-content-between align-content-center">
+        <div class="row align-content-center height100">
+          
+            <% if (locals.layoutVariables.usuario) { %>
+              <div class="col-auto">
+                <div class="row align-content-center height100">
+                  <a href="/cadastroAnimais"><button type="button" class="btn btn-outline-primary mx-2 lara">Cadastrar animal</button></a>
+                </div>
+              </div>
+              <div class="col-auto p-0">
+                <a href="/perfil"><i class="bi bi-person-circle" style="font-size: 3vw;"></i></a>
+              </div>
+              
+            <% }else{ %>
+              <div class="col-auto">
+                <div class="row align-content-center height100">
+                  <a href="/login"><button type="button" class="btn btn-outline-primary mx-2 lara">Entre</button></a>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="row align-content-center height100">
+                  <a href="/cadastro"><button type="button" class="btn btn-primary">Cadastre-se</button></a>
+                </div>
+              </div>
+            <% } %> 
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
