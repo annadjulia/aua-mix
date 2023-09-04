@@ -1,27 +1,46 @@
 const express = require('express'); 
 const app = express(); 
-const port = 3000; 
+const PORT = 3000; 
+const HOST = 'localhost';
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
 const dotenv = require('dotenv').config();
 const path = require('path');
 const usuarioController = require('./controllers/usuarioController');
 const animaisController = require('./controllers/animaisController');
 
+/*multer
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads");
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    },
+});
+var upload = multer({ storage: storage });
+
+//cloudinary
 cloudinary.config({
     cloud_name: 'dj1sdgtdr',
     api_key: '174723524863143',
     api_secret: '56QaNgRoQzpaHefInLcyQ-56TAc'
   });
-
+*/
+  
+//session
 app.use(session({secret: 'abracadabra'}));
 
+//ejs
 app.use(expressLayouts);
 app.set('layout', './layouts/default/login');
 app.set('view engine', 'ejs');
 
+//body-parser
 app.use(express.urlencoded({ extended: true })); 
+//app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
@@ -46,6 +65,11 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     app.set('layout', './layouts/default/main');
+    res.locals.layoutVariables = {
+        usuario: req.session.usuario,
+        url: process.env.URL,
+        title: "Home"
+    };
     res.render('home');
 });
 
@@ -83,12 +107,17 @@ app.get('/animais', (req, res) => {
 
 app.get('/animais/:id', (req, res) => {
     app.set('layout', './layouts/default/main');
-    //animaisController.getAnimal(req, res);
-    res.send('nao ta pronto ainda');
+    animaisController.getAnimal(req, res);
+    //res.send('nao ta pronto ainda');
 });
 
 app.get('/sobre', (req, res) => {
     app.set('layout', './layouts/default/main');
+    res.locals.layoutVariables = {
+        usuario: req.session.usuario,
+        url: process.env.URL,
+        title: "Sobre"
+    };
     res.render('sobre');
 });
 
@@ -101,6 +130,6 @@ app.get('/logout', (req, res) => {
     usuarioController.logout(req, res);
 });
 
-app.listen(port, () => { 
-    console.log(`Servidor rodando em http://localhost:${port}`);
+app.listen(PORT, () => { 
+    console.log(`Servidor rodando em ${HOST}:${PORT}`);
 });

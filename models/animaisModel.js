@@ -23,12 +23,23 @@ async function getAnimal(id){
     return resp;
 }
 
+/*
 async function cadastrarEspecie(nome){
     console.log('Cadastrando espécie');
-    let sql = `INSERT INTO especies (nome) VALUES ('${nome}')`;
+    let sql = `SELECT * FROM especies WHERE nome = '${nome}'`;
     let resp = await db.query(sql);
-    return resp;
-}
+    if(resp.length > 0){
+        console.log('Espécie já cadastrada');
+        console.log(resp);
+        return resp[0].id;
+    }else{
+        console.log('Espécie não cadastrada');
+        sql = `INSERT INTO especies (nome) VALUES ('${nome}')`;
+        resp = await db.query(sql);
+        console.log(resp);
+        return resp[0].insertId;
+    }
+}*/
 
 async function getEspecie(id){
     console.log('Buscando espécie');
@@ -52,4 +63,4 @@ async function getFoto(id){
     return resp;
 }
 
-module.exports = { listarAnimais, cadastrarAnimal, getAnimal, cadastrarEspecie, getEspecie, cadastrarImg, getFoto };
+module.exports = { listarAnimais, cadastrarAnimal, getAnimal,  getEspecie, cadastrarImg, getFoto };

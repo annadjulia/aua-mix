@@ -12,6 +12,7 @@ function login(req, res) {
         erro = '';
     }
     res.locals.layoutVariables = {
+        usuario: req.session.usuario,
         url: process.env.URL,
         title: "Login"
     };
@@ -28,6 +29,7 @@ function cadastro(req, res) {
         erro = '';
     }
     res.locals.layoutVariables = {
+        usuario: req.session.usuario,
         url: process.env.URL,
         title: "Cadastro"
     };
@@ -78,7 +80,11 @@ async function cadastrar(req, res) {
 }
 
 function perfil(req, res){
-    res.locals.layoutVariables = {usuario: req.session.usuario};
+    res.locals.layoutVariables = {
+        usuario: req.session.usuario,
+        url: process.env.URL,
+        title: "Perfil"
+    };
     res.render('perfil');
 }
 

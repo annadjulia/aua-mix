@@ -3,10 +3,10 @@ const mysql = require('mysql2/promise');
 async function connect() {
   try {
     const connection = await mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'adote_um_amigo'
+      host: 'sql8.freemysqlhosting.net',
+      user: 'sql8643898',
+      password: 'u4WcudPWmk',
+      database: 'sql8643898'
     });
     console.log('Conexão estabelecida com sucesso');
     return connection;
