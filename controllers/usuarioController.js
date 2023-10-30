@@ -1,38 +1,30 @@
 const usuarioModel = require('../models/usuarioModel');
 
 function login(req, res) {
-    erro = req.query.erro;
-    if(erro == 1){
-        erro = 'Email ou senha incorretos';
-    }else if(erro == 2){
-        erro = 'Você precisa estar logado para acessar essa página';
-    }else if(erro == 3){
-        erro = 'Usuário cadastrado com sucesso';
-    }else{
-        erro = '';
-    }
+    console.log(req.headers.referer.replace("https://", ""));
+    console.log(process.env.URL + '/cadastro')
+    
+    console.log(req.session.erro);
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
         url: process.env.URL,
-        title: "Login"
+        title: "Login",
+        erro: req.session.erro
     };
+    delete req.session.erro;
     res.render('login');
 }
 
 function cadastro(req, res) {
-    erro = req.query.erro;
-    if(erro == 1){
-        erro = 'Já existe um usuário com esse email';
-    }else if(erro == 2){
-        erro = 'Senhas não conferem';
-    }else{
-        erro = '';
-    }
+   
+    console.log(req.session.erro);
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
         url: process.env.URL,
-        title: "Cadastro"
+        title: "Cadastro",
+        erro: req.session.erro
     };
+    delete req.session.erro;
     res.render('cadastro');
 }
 
@@ -47,14 +39,16 @@ async function autenticar(req, res) {
             email: resp[0].email,
             ong: resp[0].ong,
             dataIngresso: resp[0].dataIngresso,
-            telefone: resp[0].telefone
+            telefone: resp[0].telefone,
+            erro: 0
         };
-        res.locals.layoutVariables = {usuario: req.session.usuario};
+        req.session.erro = 0;
         console.log('Usuário encontrado');
         res.redirect('/');
     }else{
         console.log('Usuário não encontrado');
-        res.redirect('/login?erro=1');
+        req.session.erro = "Email ou senha incorretos";
+        res.redirect('/login');
     }
 }
 
@@ -63,17 +57,21 @@ async function cadastrar(req, res) {
     const { nome, email, senha , senha2} = req.body;
     if(senha !== senha2){
         console.log('Senhas não conferem');
-        res.redirect('/cadastro?erro=2');
+        req.session.erro = "Senhas não conferem";
+        res.redirect('/cadastro');
     }else{
         let resp = await usuarioModel.cadastrarUsuario(nome, email, senha);
     if(resp === false){
         console.log('Usuário já existe');
-        res.redirect('/cadastro?erro=1');
+        req.session.erro = "Já existe um usuário com esse email";
+        res.redirect('/cadastro');
         }else if(resp.affectedRows > 0){
             console.log('Usuário cadastrado');
-            res.redirect('/login?erro=3');
+            req.session.erro = 0;
+            res.redirect('/login');
         }else{
             console.log('Erro ao cadastrar usuário');
+            req.session.erro = "Erro ao cadastrar usuário";
             res.redirect('/cadastro');
         }
     }

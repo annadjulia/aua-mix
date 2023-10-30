@@ -1,7 +1,7 @@
 const express = require('express'); 
 const app = express(); 
-const PORT = 10000; 
-const HOST = '0.0.0.0';
+const PORT = 3000; 
+const HOST = 'localhost';
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const cloudinary = require('cloudinary').v2;
@@ -11,10 +11,10 @@ const path = require('path');
 const usuarioController = require('./controllers/usuarioController');
 const animaisController = require('./controllers/animaisController');
 
-/*multer
+//multer
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./uploads");
+        cb(null, "./public/uploads");
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -28,7 +28,7 @@ cloudinary.config({
     api_key: '174723524863143',
     api_secret: '56QaNgRoQzpaHefInLcyQ-56TAc'
   });
-*/
+
   
 //session
 app.use(session({secret: 'abracadabra'}));
@@ -40,24 +40,33 @@ app.set('view engine', 'ejs');
 
 //body-parser
 app.use(express.urlencoded({ extended: true })); 
-//app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
     if (req.session.usuario) {
         console.log('Logado');
-        res.locals.layoutVariables ={
-            usuario: req.session.usuario
+        res.locals.layoutVariables = {
+            usuario: req.session.usuario,
+            url: process.env.URL,
+            title: "Home",
+            erro: req.session.erro
         };
         next();
     }else{
         console.log('Não logado');
         if(req.url == '/cadastroAnimais' || req.url == '/perfil' || req.url == '/logout'){
-            res.redirect('/login?erro=2');
-        }else{
-            res.locals.layoutVariables ={
-                usuario: req.session.usuario
+            res.locals.layoutVariables = {
+                usuario: null,
+                url: process.env.URL,
+                title: "Login",
+                erro: "Você precisa estar logado para acessar essa página"
             };
+            req.session.erro = "Você precisa estar logado para acessar essa página";
+            res.redirect('/login');
+        }else{
+            res.locals.layoutVariables += {
+                erro: req.session.erro
+            }
             next();
         }
     }
@@ -68,7 +77,8 @@ app.get('/', (req, res) => {
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
         url: process.env.URL,
-        title: "Home"
+        title: "Home",
+        erro: req.session.erro
     };
     res.render('home');
 });
@@ -96,7 +106,7 @@ app.get('/cadastroAnimais', (req, res) => {
     animaisController.cadastroAnimais(req, res);
 });
 
-app.post('/cadastroAnimais', (req, res) => {
+app.post('/cadastroAnimais', upload.single("foto"), (req, res) => {
     animaisController.cadastrar(req, res);
 });
 
@@ -108,7 +118,6 @@ app.get('/animais', (req, res) => {
 app.get('/animais/:id', (req, res) => {
     app.set('layout', './layouts/default/main');
     animaisController.getAnimal(req, res);
-    //res.send('nao ta pronto ainda');
 });
 
 app.get('/sobre', (req, res) => {

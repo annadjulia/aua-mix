@@ -1,4 +1,6 @@
 const db = require('./db');
+const cloudinary = require('cloudinary').v2;
+const path = require('path');
 
 async function listarAnimais(){
     console.log('Listando animais');
@@ -7,12 +9,30 @@ async function listarAnimais(){
     return resp;
 }
 
-async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas){
+async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas, foto){
     console.log('Cadastrando animal');
     let sql = `INSERT INTO animais (usuario_id, especie_id, nome, idade, detalhes, disponivel)
     VALUES ('${id_usuario}', '${id_especie}', '${nome}', '${idade}', '${caracteristicas}', 1)`;
     let resp = await db.query(sql);
     console.log(resp);
+    let id_animal = resp.insertId;
+    console.log(id_animal);
+    let fotoUrl;
+    try{
+        let rota = path.join(__dirname, '../');
+        fotoUrl = await cloudinary.uploader.upload(rota+"/public/uploads/"+foto, {folder: 'media-AUA'});
+        console.log(fotoUrl.secure_url);
+        fs.unlinkSync(rota+"/public/uploads/"+foto);
+        
+    }catch (err){
+        console.log(err);
+    }
+    try{
+        let respFoto = await cadastrarImg(fotoUrl.secure_url, id_animal);
+    }catch (err){
+        console.log(err);
+    }
+    
     return resp;
 }
 
@@ -22,24 +42,6 @@ async function getAnimal(id){
     let resp = await db.query(sql);
     return resp;
 }
-
-/*
-async function cadastrarEspecie(nome){
-    console.log('Cadastrando espécie');
-    let sql = `SELECT * FROM especies WHERE nome = '${nome}'`;
-    let resp = await db.query(sql);
-    if(resp.length > 0){
-        console.log('Espécie já cadastrada');
-        console.log(resp);
-        return resp[0].id;
-    }else{
-        console.log('Espécie não cadastrada');
-        sql = `INSERT INTO especies (nome) VALUES ('${nome}')`;
-        resp = await db.query(sql);
-        console.log(resp);
-        return resp[0].insertId;
-    }
-}*/
 
 async function getEspecie(id){
     console.log('Buscando espécie');

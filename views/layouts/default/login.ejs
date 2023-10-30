@@ -12,10 +12,16 @@
 </head>
 <body>
     <div class="container-fluid position-relative justify-content-center" style="height: 100vh;">
-        <% if (erro) { %>
+        <% if (locals.layoutVariables.erro) { %>
             <div class="alert alert-danger position-absolute top-0 start-50 translate-middle-x mt-5" role="alert">
-              <%= erro %>
+              <%= locals.layoutVariables.erro %>
             </div>
+            <script>
+                setTimeout(function() {
+                    var alert = document.querySelector('.alert');
+                    alert.style.display = 'none';
+                }, 3000);
+            </script>
           <% } %>
         <div class="row justify-content-center align-content-center height100">
             <div class="col-6 bgwt height100">
