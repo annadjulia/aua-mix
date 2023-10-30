@@ -46,7 +46,7 @@ async function getAnimal(req, res) {
 
 async function cadastrar(req, res) {
     let {nome, especie, tamanho, idade, caracteristicas, foto} = req.body;
-    foto = req.file.filename;
+    foto = req.file;
     const id_usuario = req.session.usuario.id;
     const id_especie = 1;
     let resp = await animaisModel.cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas, foto);

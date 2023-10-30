@@ -7,6 +7,7 @@ const session = require('express-session');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const dotenv = require('dotenv').config();
+const { v4: uuid } = require('uuid');
 const path = require('path');
 const usuarioController = require('./controllers/usuarioController');
 const animaisController = require('./controllers/animaisController');
@@ -17,7 +18,8 @@ var storage = multer.diskStorage({
         cb(null, "./public/uploads");
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        const fileName = `${uuid()}-${file.originalname}`;
+        cb(null, fileName);
     },
 });
 var upload = multer({ storage: storage });

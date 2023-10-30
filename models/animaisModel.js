@@ -1,12 +1,20 @@
 const db = require('./db');
 const cloudinary = require('cloudinary').v2;
 const path = require('path');
+const fs = require('fs');
 
 async function listarAnimais(){
     console.log('Listando animais');
-    let sql = `SELECT * FROM animais ORDER BY id DESC`;
-    let resp = await db.query(sql);
-    return resp;
+    let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                ORDER BY animais.id DESC`;
+    try{
+        let resp = await db.query(sql);
+        return resp;
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas, foto){
@@ -17,20 +25,22 @@ async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristi
     console.log(resp);
     let id_animal = resp.insertId;
     console.log(id_animal);
-    let fotoUrl;
+    let fotoUrl, respFoto;
+    foto = foto.filename;
     try{
         let rota = path.join(__dirname, '../');
         fotoUrl = await cloudinary.uploader.upload(rota+"/public/uploads/"+foto, {folder: 'media-AUA'});
         console.log(fotoUrl.secure_url);
         fs.unlinkSync(rota+"/public/uploads/"+foto);
-        
+        respFoto = await cadastrarImg(fotoUrl.secure_url, id_animal);
+        console.log(respFoto);
+        if(respFoto.affectedRows == 1){
+            console.log('Imagem cadastrada com sucesso');
+        }else{
+            console.log('Erro ao cadastrar imagem');
+        }
     }catch (err){
-        console.log(err);
-    }
-    try{
-        let respFoto = await cadastrarImg(fotoUrl.secure_url, id_animal);
-    }catch (err){
-        console.log(err);
+        console.log("erro:"+err);
     }
     
     return resp;
@@ -38,7 +48,9 @@ async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristi
 
 async function getAnimal(id){
     console.log('Buscando animal');
-    let sql = `SELECT * FROM animais WHERE id = '${id}'`;
+    let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id 
+                WHERE animais.id = '${id}'`;
     let resp = await db.query(sql);
     return resp;
 }
