@@ -51,3 +51,7 @@ body{
 .form-control{
     border: none;
 }
+.img-cards{
+    height: 15vw;
+    object-fit: cover;
+}

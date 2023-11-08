@@ -51,6 +51,7 @@ async function getAnimal(id){
     let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
                 INNER JOIN fotos on fotos.animal_id = animais.id 
                 WHERE animais.id = '${id}'`;
+                console.log(path)
     let resp = await db.query(sql);
     return resp;
 }

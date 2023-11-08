@@ -16,7 +16,6 @@ function login(req, res) {
 }
 
 function cadastro(req, res) {
-   
     console.log(req.session.erro);
     res.locals.layoutVariables = {
         usuario: req.session.usuario,

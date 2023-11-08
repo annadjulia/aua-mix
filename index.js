@@ -44,7 +44,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
+app.use(express.static(path.join(__dirname, 'public')), (req, res, next) => {
     if (req.session.usuario) {
         console.log('Logado');
         res.locals.layoutVariables = {
@@ -56,6 +56,7 @@ app.use((req, res, next) => {
         next();
     }else{
         console.log('Não logado');
+        console.log(req.url+ " url , "+ req.path + " path" );
         if(req.url == '/cadastroAnimais' || req.url == '/perfil' || req.url == '/logout'){
             res.locals.layoutVariables = {
                 usuario: null,
