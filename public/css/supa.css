@@ -29,11 +29,35 @@ body{
 .fundoroxo{
     background-color: #A10AFF;
 }
+.fundolaranja{
+    background-color: #FF700A;
+}
+.botaoroxo{
+    background-color: #A10AFF;
+    border-color: #A10AFF;
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #A10AFF;
+    --bs-btn-border-color: #A10AFF;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #7A00CC;
+    --bs-btn-hover-border-color: #7A00CC;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #7A00CC;
+    --bs-btn-active-border-color: #7A00CC;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #A10AFF;
+    --bs-btn-disabled-border-color: #A10AFF;
+}
 .slab{
     font-family: 'Roboto Slab', serif;
 }
 .roxo{
     color: #A10AFF;
+}
+.laranja{
+    color: #FF700A;
 }
 .lara{
     background-color: #FF700A;

@@ -27,4 +27,11 @@ async function cadastrarUsuario(nome, email, senha){
     return resp;
 }
 
-module.exports = { verificarUsuario, cadastrarUsuario };
+async function listarUsuarios(){
+    console.log('Listando usuários');
+    let sql = `SELECT * FROM usuarios`;
+    let resp = await db.query(sql);
+    return resp;
+}
+
+module.exports = { verificarUsuario, cadastrarUsuario, listarUsuarios };

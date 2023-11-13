@@ -1,0 +1,25 @@
+<div class="row rounded shadow justify-content-center bgwt p-2 mb-3 mx-1 text-center">
+    <h1>Busca por usuários</h1>
+  </div>
+  <div class="row row-cols-1 row-cols-md-5 g-4">
+    <% usuarios.forEach(usuario => { %>
+
+    <% if(usuario.id != locals.layoutVariables.usuario.id){ %>
+      <div class="col rounded"></div>
+    <%}});%>
+  </div>
+
+    <% animais.forEach(animal => { %> 
+    <div class="col rounded">
+      <div class="card h-100">
+        <img src="<%- animal.url %>" class="card-img-top img-fluid img-cards" alt="<%- animal.legenda %>">
+        <div class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>">
+          <h5 class="card-title fofo"><%- animal.nome %></h5>
+          <p class="card-text fofo mb-1"><%- animal.idade %> <% if(animal.idade==1){ %> ano <% }else{ %> anos <% } %> | <% if(animal.sexo=='F'){ %> Fêmea <% }else{ %> Macho <% } %></p>
+          <p class="card-text fofo mb-1"><%- animal.detalhes %></p>
+          <a href="/animais/<%- animal.id %>" class="btn btn-light <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>">Ver mais</a>
+        </div>
+      </div>
+    </div>
+    <% }); %> 
+  </div>

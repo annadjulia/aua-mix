@@ -97,4 +97,14 @@ function logout(req, res){
     res.redirect('/login');
 }
 
+async function listarUsuarios(req, res){
+    res.locals.layoutVariables = {
+        usuario: req.session.usuario,
+        url: process.env.URL,
+        title: "Usuários"
+    };
+    let usuarios = await usuarioModel.listarUsuarios();
+    res.render('usuarios', { usuarios });
+}
+
 module.exports = { login, cadastro, autenticar, cadastrar, logout, perfil };
