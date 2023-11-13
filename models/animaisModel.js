@@ -17,6 +17,21 @@ async function listarAnimais(){
     }
 }
 
+async function listarAnimaisUsuario(id){
+    console.log('Listando animais usuario');
+    let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                WHERE animais.usuario_id = '${id}'
+                ORDER BY animais.id DESC`;
+    try{
+        let resp = await db.query(sql);
+        return resp;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas, foto){
     console.log('Cadastrando animal');
     let sql = `INSERT INTO animais (usuario_id, especie_id, nome, idade, detalhes, disponivel)
@@ -78,4 +93,4 @@ async function getFoto(id){
     return resp;
 }
 
-module.exports = { listarAnimais, cadastrarAnimal, getAnimal,  getEspecie, cadastrarImg, getFoto };
+module.exports = { listarAnimais, listarAnimaisUsuario, cadastrarAnimal, getAnimal,  getEspecie, cadastrarImg, getFoto };

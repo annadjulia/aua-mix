@@ -1,5 +1,4 @@
 const animaisModel = require('../models/animaisModel');
-const cloudinary = require('cloudinary').v2;
 let animais = [];
 
 function cadastroAnimais(req, res) {
@@ -45,7 +44,7 @@ async function getAnimal(req, res) {
 }
 
 async function cadastrar(req, res) {
-    let {nome, especie, tamanho, idade, caracteristicas, foto} = req.body;
+    let {nome, idade, caracteristicas, foto} = req.body;
     foto = req.file;
     const id_usuario = req.session.usuario.id;
     const id_especie = 1;

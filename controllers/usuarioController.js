@@ -1,9 +1,10 @@
 const usuarioModel = require('../models/usuarioModel');
+const animaisModel = require('../models/animaisModel');
+let animais = [];
 
 function login(req, res) {
-    console.log(req.headers.referer.replace("https://", ""));
+    //console.log(req.headers.referer.replace("https://", ""));
     console.log(process.env.URL + '/cadastro')
-    
     console.log(req.session.erro);
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
@@ -76,13 +77,19 @@ async function cadastrar(req, res) {
     }
 }
 
-function perfil(req, res){
+async function perfil(req, res){
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
         url: process.env.URL,
         title: "Perfil"
     };
-    res.render('perfil');
+    animais = await animaisModel.listarAnimaisUsuario(req.session.usuario.id);
+    animais.forEach(async (animal) => {
+        let especie = await animaisModel.getEspecie(animal.especie_id);
+        animal.especie = especie[0].nome;
+    });
+    console.log(animais);
+    res.render('perfil', { animais });
 }
 
 function logout(req, res){

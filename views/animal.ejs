@@ -1,10 +1,14 @@
 <div class="row">
     <div class="col">
-        <div class="card h-100">
-            <img src="<%- animal.url %>" class="card-img-top" alt="...">
-            <div class="card-body">
+        <div class="row">
+            <div class="col-5">
+                <div class="row">
+                    <img src="<%- animal.url %>" class="img-fluid img-cards" style="height: fit-content;" alt="...">
+                </div>
+            </div>
+            <div class="col-7">
                 <h5 class="card-title"><%- animal.nome %></h5>
-                <p class="card-text"><%- animal.idade %> anos | <%- animal.detalhes %></p>
+                <p class="card-text"><%- animal.idade %> <% if(animal.idade==1){ %> ano <% }else{ %> anos <% } %> | <%- animal.detalhes %></p>
                 <a href="/animais/<%- animal.id %>" class="btn btn-primary lara">Adotar</a>
             </div>
         </div>
