@@ -97,7 +97,7 @@ function logout(req, res){
     res.redirect('/login');
 }
 
-async function listarUsuarios(req, res){
+async function usuarios(req, res){
     res.locals.layoutVariables = {
         usuario: req.session.usuario,
         url: process.env.URL,
@@ -107,4 +107,22 @@ async function listarUsuarios(req, res){
     res.render('usuarios', { usuarios });
 }
 
-module.exports = { login, cadastro, autenticar, cadastrar, logout, perfil };
+async function getUsuario(req, res){
+    const { id } = req.params;
+    let usuario = await usuarioModel.getUsuario(id);
+    if (usuario.length == 0) {
+        res.redirect('/users');
+    }else{
+        console.log(usuario[0]);
+        console.log(usuario);
+        res.locals.layoutVariables = {
+            usuario: req.session.usuario,
+            url: process.env.URL,
+            title: usuario[0].nome
+        };
+        let animais = await animaisModel.listarAnimaisUsuario(id);
+        res.render('usuario', { usuario: usuario[0], animais });
+    }
+}
+
+module.exports = { login, cadastro, autenticar, cadastrar, logout, perfil, usuarios, getUsuario };

@@ -31,7 +31,15 @@ async function listarUsuarios(){
     console.log('Listando usuários');
     let sql = `SELECT * FROM usuarios`;
     let resp = await db.query(sql);
+    console.log("selectusuarios== "+resp[0][0]);
     return resp;
 }
 
-module.exports = { verificarUsuario, cadastrarUsuario, listarUsuarios };
+async function getUsuario(id){
+    console.log('Procurando usuário');
+    let sql = `SELECT * FROM usuarios WHERE id = ${id}`;
+    let resp = await db.query(sql);
+    return resp;
+}
+
+module.exports = { verificarUsuario, cadastrarUsuario, listarUsuarios, getUsuario };

@@ -1,7 +1,7 @@
 const express = require('express'); 
 const app = express(); 
-const PORT = 10000; 
-const HOST = '0.0.0.0';
+const PORT = 3000; 
+const HOST = 'localhost';
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const cloudinary = require('cloudinary').v2;
@@ -125,7 +125,7 @@ app.get('/animais/:id', (req, res) => {
 
 app.get('/users', (req, res) => {
     app.set('layout', './layouts/default/main');
-    usuarioController.listarUsuarios(req, res);
+    usuarioController.usuarios(req, res);
 });
 
 app.get('/users/:id', (req, res) => {

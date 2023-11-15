@@ -6,20 +6,14 @@
 
     <% if(usuario.id != locals.layoutVariables.usuario.id){ %>
       <div class="col rounded"></div>
-    <%}});%>
-  </div>
-
-    <% animais.forEach(animal => { %> 
-    <div class="col rounded">
       <div class="card h-100">
-        <img src="<%- animal.url %>" class="card-img-top img-fluid img-cards" alt="<%- animal.legenda %>">
-        <div class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>">
-          <h5 class="card-title fofo"><%- animal.nome %></h5>
-          <p class="card-text fofo mb-1"><%- animal.idade %> <% if(animal.idade==1){ %> ano <% }else{ %> anos <% } %> | <% if(animal.sexo=='F'){ %> Fêmea <% }else{ %> Macho <% } %></p>
-          <p class="card-text fofo mb-1"><%- animal.detalhes %></p>
-          <a href="/animais/<%- animal.id %>" class="btn btn-light <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>">Ver mais</a>
+        <img src="<%- usuario.foto %>" class="card-img-top img-fluid img-cards" alt="">
+        <div class="card-body rounded-bottom">
+          <h5 class="card-title fofo"><%- usuario.nome %></h5>
+          <p class="card-text fofo mb-1"><%- usuario.email %> </p>
+          <a href="/users/<%- usuario.id %>" class="btn btn-light">Ver mais</a>
         </div>
       </div>
-    </div>
-    <% }); %> 
+    <%}});%>
+  </div>
   </div>
