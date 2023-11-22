@@ -1,10 +1,10 @@
 <div class="row rounded shadow justify-content-center bgwt p-2 mb-3 mx-1 text-center">
   <h1>Animais para adoção</h1>
 </div>
-<div class="row row-cols-1 row-cols-md-5 g-4">
+<div class="row row-cols-1 row-cols-md-4 g-4">
   
   <% animais.forEach(animal => { %> 
-  <div class="col rounded">
+  <div class="col rounded animalcard">
     <div class="card h-100">
       <img src="<%- animal.url %>" class="card-img-top img-fluid img-cards" alt="<%- animal.legenda %>">
       <div class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>">

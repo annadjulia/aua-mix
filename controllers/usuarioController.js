@@ -99,11 +99,13 @@ function logout(req, res){
 
 async function usuarios(req, res){
     res.locals.layoutVariables = {
-        usuario: req.session.usuario,
+        usuario: req.session.usuario !== undefined ? req.session.usuario : 0,
         url: process.env.URL,
         title: "Usuários"
     };
+    console.log('locals: '+res.locals.layoutVariables.usuario);
     let usuarios = await usuarioModel.listarUsuarios();
+    console.log(usuarios);
     res.render('usuarios', { usuarios });
 }
 
@@ -121,6 +123,7 @@ async function getUsuario(req, res){
             title: usuario[0].nome
         };
         let animais = await animaisModel.listarAnimaisUsuario(id);
+        console.log(animais);
         res.render('usuario', { usuario: usuario[0], animais });
     }
 }

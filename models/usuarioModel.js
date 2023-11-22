@@ -31,7 +31,6 @@ async function listarUsuarios(){
     console.log('Listando usuários');
     let sql = `SELECT * FROM usuarios`;
     let resp = await db.query(sql);
-    console.log("selectusuarios== "+resp[0][0]);
     return resp;
 }
 

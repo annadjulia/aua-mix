@@ -4,7 +4,7 @@
   <div class="row row-cols-1 row-cols-md-5 g-4">
     <% usuarios.forEach(usuario => { %>
 
-    <% if(usuario.id != locals.layoutVariables.usuario.id){ %>
+    <% console.log(usuario); if(usuario.id != locals.layoutVariables.usuario.id){ %>
       <div class="col rounded"></div>
       <div class="card h-100">
         <img src="<%- usuario.foto %>" class="card-img-top img-fluid img-cards" alt="">
