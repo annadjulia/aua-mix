@@ -1,11 +1,11 @@
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between headCor py-3 px-4 mb-4 border-bottom bgwt">
+<header class="header-nav d-flex flex-wrap align-items-center justify-content-center justify-content-md-between headCor py-3 px-4 mb-4 border-bottom bgwt">
   <div class="container">
     <div class="row justify-content-between align-content-center">
       <a href="/" class="col-auto align-content-center d-flex" style="flex-wrap: inherit;">
-        <img src="/media/minilogo.png" alt="Adote Um Amigo" class="img-fluid logo" style="height: 4vw;">
+        <img src="/media/cardsemfundocerto.png" alt="Adote Um Amigo" class="img-fluid logo" style="height: 4vw;">
       </a>
   
-      <ul class="nav col-auto justify-content-between align-content-center">
+      <ul class="nav col-auto justify-content-between align-content-center slab">
         <li><a href="/" class="nav-link px-4 roxo">Home</a></li>
         <li><a href="/animais" class="nav-link px-4 roxo">Animais</a></li>
         <li><a href="/users" class="nav-link px-4 roxo">Usuários</a></li>
@@ -33,7 +33,7 @@
               </div>
               <div class="col-auto">
                 <div class="row align-content-center height100">
-                  <a href="/cadastro"><button type="button" class="btn btn-primary">Cadastre-se</button></a>
+                  <a href="/cadastro"><button type="button" class="btn btn-primary botaoroxo">Cadastre-se</button></a>
                 </div>
               </div>
             <% } %> 
@@ -43,3 +43,32 @@
     </div>
   </div>
 </header>
+
+
+<style>
+  @media (max-width: 1000px ) {
+    .nav {
+      display: none;
+    }
+
+    
+  }
+
+  @media (max-width: 800px) {
+    .header-nav {
+      display: none;
+    }
+
+    .hamburger-menu {
+      display: block;
+    }
+  }
+
+  .header-nav {
+    display: block;
+  }
+
+  .hamburger-menu {
+    display: none;
+  }
+</style>

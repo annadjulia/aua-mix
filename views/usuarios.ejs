@@ -1,10 +1,10 @@
 <div class="row rounded shadow justify-content-center bgwt p-2 mb-3 mx-1 text-center">
-    <h1>Busca por usuários</h1>
-  </div>
-  <div class="row row-cols-1 row-cols-md-5 g-4">
-    <% usuarios.forEach(usuario => { %>
+  <h1>Busca por usuários</h1>
+</div>
+<div class="row row-cols-1 row-cols-md-5 g-4">
+  <% usuarios.forEach(usuario => { %>
 
-    <% console.log(usuario); if(usuario.id != locals.layoutVariables.usuario.id){ %>
+    <% console.log(usuario); if(usuario.id !=locals.layoutVariables.usuario.id){ %>
       <div class="col rounded"></div>
       <div class="card h-100">
         <img src="<%- usuario.foto %>" class="card-img-top img-fluid img-cards" alt="">
@@ -14,6 +14,6 @@
           <a href="/users/<%- usuario.id %>" class="btn btn-light">Ver mais</a>
         </div>
       </div>
-    <%}});%>
-  </div>
-  </div>
+      <%}});%>
+</div>
+</div>

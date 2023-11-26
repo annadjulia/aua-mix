@@ -1,37 +1,17 @@
 <div class="row height100 rounded shadow justify-content-center bgwt p-5">
-    <div class="col-8">
-        <h1>PERFIL</h1>
-        <h2>Informações pessoais</h2>
-        <ul class="list-group">
-            <li class="list-group-item">Nome: <%- usuario.nome %></li>
-            <li class="list-group-item">Cidade: São Paulo</li>
-        </ul>
-        <h2>Informações de contato</h2>
-        <ul class="list-group">
-            <li class="list-group-item">E-mail: <%- usuario.email %></li>
-            <li class="list-group-item">Telefone: (11) 9999-9999</li>
-            <li class="list-group-item">Endereço: Rua A, 123</li>
-        </ul>
-        <h2>Animais para adoção</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <% if(animais.length == 0){ %>
-                <ul class="list-group">
-                    <li class="list-group-item">Você não possui animais cadastrados.</li>
-                </ul>
-            <% } else { %>
-              <% animais.forEach(animal => { %> 
-                <div class="col rounded">
-                  <div class="card h-100">
-                    <img src="<%- animal.url %>" class="card-img-top img-fluid img-cards" alt="<%- animal.legenda %>">
-                    <div class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>">
-                      <h5 class="card-title fofo"><%- animal.nome %></h5>
-                      <p class="card-text fofo mb-1"><%- animal.idade %> <% if(animal.idade==1){ %> ano <% }else{ %> anos <% } %> | <% if(animal.sexo=='F'){ %> Fêmea <% }else{ %> Macho <% } %></p>
-                      <p class="card-text fofo mb-1"><%- animal.detalhes %></p>
-                      <a href="/animais/<%- animal.id %>" class="btn btn-light <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>">Ver mais</a>
-                    </div>
-                  </div>
-                </div>
-                <% }); %> 
-          </div>
-    </div>
+  <div class="col-8">
+    <h1><%- usuario.nome %></h1>
+    <h2>Informações pessoais</h2>
+    <ul class="list-group">
+      <li class="list-group-item">Nome: </li>
+      <li class="list-group-item">Cidade: São Paulo</li>
+    </ul>
+    <h2>Informações de contato</h2>
+    <ul class="list-group">
+      <li class="list-group-item">E-mail: <%- usuario.email %></li>
+      <li class="list-group-item">Telefone: (11) 9999-9999</li>
+      <li class="list-group-item">Endereço: Rua A, 123</li>
+    </ul>
+    <%- include('animaisUser') %>
+    
 </div>
