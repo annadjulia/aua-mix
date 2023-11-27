@@ -1,3 +1,4 @@
+const { stringify } = require("uuid");
 const usuarioModel = require("../models/usuarioModel");
 const animaisController = require("./animaisController");
 let animais = [];
@@ -39,6 +40,8 @@ async function autenticar(req, res) {
       ong: resp[0].ong,
       dataIngresso: resp[0].dataIngresso,
       telefone: resp[0].telefone,
+      foto: resp[0].foto,
+      cidade: resp[0].cidade,
       erro: 0,
     };
     req.session.erro = 0;
@@ -82,6 +85,7 @@ async function perfil(req, res) {
     url: process.env.URL,
     title: "Perfil",
   };
+  console.log("session:"+JSON.stringify(req.session.usuario));
   animais = await animaisController.listarAnimaisUsuario(req.session.usuario.id);
   console.log(animais);
   res.render("perfil", { animais });

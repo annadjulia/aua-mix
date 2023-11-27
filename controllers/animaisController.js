@@ -1,4 +1,5 @@
 const animaisModel = require("../models/animaisModel");
+const usersModel = require("../models/usersModel");
 let animais = [];
 
 function cadastroAnimais(req, res) {
@@ -35,7 +36,11 @@ async function getAnimal(req, res) {
       url: process.env.URL,
       title: animal[0].nome,
     };
-    res.render("animal", { animal: animal[0] });
+    let data = animal[0].dataAdd.getDate() + "/" + (animal[0].dataAdd.getMonth() + 1) + "/" + animal[0].dataAdd.getFullYear();
+    animal[0].dataAdd = data
+    animal[0].caracteristicas = JSON.parse(animal[0].caracteristicas);
+    let usuario = await usersModel.getUsuario(animal[0].usuario_id);
+    res.render("animal", { animal: animal[0], usuario: usuario[0] });
   }
 }
 
@@ -47,6 +52,8 @@ async function listarAnimaisUsuario(id) {
 async function cadastrar(req, res) {
   let { nome, idade, caracteristicas, especie, tamanho, sexo, foto } = req.body;
   foto = req.file;
+  console.log(caracteristicas[0])
+  caracteristicas = caracteristicas[0];
   const id_usuario = req.session.usuario.id;
   const id_especie = 1;
   let resp = await animaisModel.cadastrarAnimal(

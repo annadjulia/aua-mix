@@ -5,7 +5,7 @@ const fs = require("fs");
 
 async function listarAnimais() {
   console.log("Listando animais");
-  let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+  let sql = `SELECT animais.*, fotos.url FROM animais 
                 INNER JOIN fotos on fotos.animal_id = animais.id
                 ORDER BY animais.id DESC`;
   try {
@@ -18,7 +18,7 @@ async function listarAnimais() {
 
 async function listarAnimaisUsuario(id) {
   console.log("Listando animais usuario");
-  let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+  let sql = `SELECT animais.*, fotos.url FROM animais 
                 INNER JOIN fotos on fotos.animal_id = animais.id
                 WHERE animais.usuario_id = '${id}'
                 ORDER BY animais.id DESC`;
@@ -73,7 +73,7 @@ async function cadastrarAnimal(
 
 async function getAnimal(id) {
   console.log("Buscando animal");
-  let sql = `SELECT animais.*, fotos.url, fotos.legenda FROM animais 
+  let sql = `SELECT animais.*, fotos.url FROM animais 
                 INNER JOIN fotos on fotos.animal_id = animais.id 
                 WHERE animais.id = '${id}'`;
   let resp = await db.query(sql);

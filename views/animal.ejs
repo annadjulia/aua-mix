@@ -4,28 +4,64 @@
       <div class="col-5">
         <div class="row">
           <div class="col">
-              <img
-              src="<%- animal.url %>"
-              class="img-fluid img-cards rounded"
-              style="height: fit-content; width: 100%;"
-              alt="..."
-            />
+            <img src="<%- animal.url %>" class="img-fluid img-cards rounded" style="height: fit-content; width: 100%;"
+              alt="..." />
           </div>
-          
+
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row rounded shadow justify-content-center bgwt p-5">
+              <p>Por <a href="/users/<%- usuario.id %>"><%- usuario.nome %></a></p>
+              <p>Mora em <%- usuario.cidade %></p>
+              <p>Publicado em <%- animal.dataAdd %></p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-7">
-        <h2 class="card-title slab"><%- animal.nome %></h5>
-        <p class="card-text">
-          <%- animal.idade %> <% if(animal.idade==1){ %> ano <% }else{ %> anos
-          <% } %> | <%- animal.detalhes %>
-        </p>
-        <a
-          href="/animais/<%- animal.id %>"
-          class="btn btn-primary <% if(animal.sexo=='F'){ %> botaoroxo <% }else{ %> lara <% } %>"
-          >Adotar</a
-        >
+        <div class="row rounded shadow justify-content-center bgwt p-5">
+          <h2 class="card-title slab <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>"><%- animal.nome %></h5>
+            <p class="card-text">
+              <%- include('./layouts/maracutaias/idade', {animal: animal}) %> | 
+              <%- include('./layouts/maracutaias/sexo', {animal: animal}) %> | 
+              <%- include('./layouts/maracutaias/tamanho', {animal: animal}) %> porte
+            </p>
+            <div>
+              <%- include('./layouts/maracutaias/caracteristicas', {caracteristicas: animal.caracteristicas}) %>
+            </div>
+            <a onclick="adotar('<%- animal%>','<%- usuario %>')"
+              class="btn btn-primary my-2 <% if(animal.sexo=='F'){ %> botaoroxo <% }else{ %> lara <% } %>">Adotar</a>
+        </div>
+        
       </div>
     </div>
   </div>
 </div>
+<div id="userInfo" class="row">
+  <div class="col-6">
+    <div class="row rounded shadow justify-content-center bgwt p-5">
+      <div class="col">
+        <i class="bi bi-x-circle-fill laranja"></i>
+        <h1>Contato para adoção</h1>
+        <h1>Nome: <%- usuario.nome %></h1>
+        <h1>Email: <%- usuario.email %></h1>
+        <h1>Telefone: <%- usuario.telefone %></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const userInfo = document.getElementById("userInfo");
+
+  function adotar(animal, usuario) {
+    userInfo.style.display = "flex";
+  }
+  
+  const circle = document.querySelector(".bi-x-circle-fill");
+  circle.addEventListener("click", () => {
+    userInfo.style.display = "none";
+  })
+
+
+</script>

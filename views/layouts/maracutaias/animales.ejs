@@ -1,0 +1,25 @@
+<% animais.forEach(animal=> { %>
+<div class="col rounded animalcard">
+  <div class="card h-100 shadow-sm">
+    <img
+      src="<%- animal.url %>"
+      class="card-img-top img-fluid img-cards"
+      alt=""
+    />
+    <div
+      class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>"
+    >
+      <h5 class="card-title fofo slab"><%- animal.nome %></h5>
+      <p class="card-text fofo mb-1">
+        <%- include('idade', {animal: animal}) %> | <%- include('sexo', {animal:
+        animal}) %> | <%- include('tamanho', {animal: animal}) %>
+      </p>
+      <a
+        href="/animais/<%- animal.id %>"
+        class="slab btn btn-light mt-2 <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>"
+        >Ver mais</a
+      >
+    </div>
+  </div>
+</div>
+<% }); %>

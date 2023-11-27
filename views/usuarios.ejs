@@ -1,19 +1,22 @@
-<div class="row rounded shadow justify-content-center bgwt p-2 mb-3 mx-1 text-center">
-  <h1>Busca por usuários</h1>
+<div
+  class="row rounded shadow justify-content-center bgwt p-2 mb-3 text-center"
+>
+  <h1 class="slab roxo">Busca por usuários</h1>
 </div>
-<div class="row row-cols-1 row-cols-md-5 g-4">
-  <% usuarios.forEach(usuario => { %>
-
-    <% console.log(usuario); if(usuario.id !=locals.layoutVariables.usuario.id){ %>
-      <div class="col rounded"></div>
-      <div class="card h-100">
-        <img src="<%- usuario.foto %>" class="card-img-top img-fluid img-cards" alt="">
-        <div class="card-body rounded-bottom">
-          <h5 class="card-title fofo"><%- usuario.nome %></h5>
-          <p class="card-text fofo mb-1"><%- usuario.email %> </p>
-          <a href="/users/<%- usuario.id %>" class="btn btn-light">Ver mais</a>
-        </div>
+<div class="row row-cols-1 row-cols-md-5 g-3">
+  <% usuarios.forEach(usuario=> { %> <% if (usuario.id!=locals.layoutVariables.usuario.id || locals.layoutVariables.usuario.id == false){ %>
+  <div class="col rounded animalcard">
+    <div class="card h-100 shadow-sm">
+      <img
+        src="<%- usuario.foto %>"
+        class="card-img-top img-fluid img-cards"
+        alt=""
+      />
+      <div class="card-body rounded-bottom">
+        <h5 class="card-title roxo slab"><%- usuario.nome %></h5>
+        <a href="/users/<%- usuario.id %>" class="btn btn-light lara mt-2">Ver mais</a>
       </div>
-      <%}});%>
-</div>
+    </div>
+  </div>
+  <%}});%>
 </div>

@@ -18,24 +18,3 @@ btn.classList.add("shadow");
 btn.classList.add("slab");
 btn.classList.add("w-100");
 btn.classList.add("mt-3")
-
-function readImage() {
-    if (this.files && this.files[0]) {
-        console.log(this.files[0]);
-        var file = new FileReader();
-        file.onload = function(e) {
-            document.getElementById("preview").src = e.target.result;
-        };       
-        file.readAsDataURL(this.files[0]);
-        uploadImageToCloudinary(e.target.result)
-        .then(imageUrl => {
-            if (imageUrl) {
-            console.log('URL da imagem no Cloudinary:', imageUrl);
-            } else {
-            console.log('Falha ao enviar a imagem.');
-            }
-        });
-    }
-}
-
-document.getElementById("img-input").addEventListener("change", readImage, false);
