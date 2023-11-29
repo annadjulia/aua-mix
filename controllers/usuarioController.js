@@ -87,7 +87,7 @@ async function perfil(req, res) {
   };
   console.log("session:"+JSON.stringify(req.session.usuario));
   animais = await animaisController.listarAnimaisUsuario(req.session.usuario.id);
-  console.log(animais);
+  animais.forEach(animal => { console.log("id: "+animal.id+" - nome: "+animal.nome) });
   res.render("perfil", { animais });
 }
 

@@ -73,6 +73,7 @@ app.use(express.static(path.join(__dirname, "public")), (req, res, next) => {
   }
 });
 
+//rotas
 app.get("/", (req, res) => {
   app.set("layout", "./layouts/default/main");
   res.locals.layoutVariables = {
@@ -84,6 +85,17 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+app.get("/sobre", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  res.locals.layoutVariables = {
+    usuario: req.session.usuario,
+    url: process.env.URL,
+    title: "Sobre",
+  };
+  res.render("sobre");
+});
+
+//usuario
 app.get("/login", (req, res) => {
   app.set("layout", "./layouts/default/login");
   usuarioController.login(req, res);
@@ -102,6 +114,27 @@ app.post("/cadastro", (req, res) => {
   usuarioController.cadastrar(req, res);
 });
 
+app.get("/perfil", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  usuarioController.perfil(req, res);
+});
+
+app.get("/logout", (req, res) => {
+  usuarioController.logout(req, res);
+});
+
+//users
+app.get("/users", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  usersController.usuarios(req, res);
+});
+
+app.get("/users/:id", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  usersController.getUsuario(req, res);
+});
+
+//animais
 app.get("/cadastroAnimais", (req, res) => {
   app.set("layout", "./layouts/default/main");
   animaisController.cadastroAnimais(req, res);
@@ -121,35 +154,15 @@ app.get("/animais/:id", (req, res) => {
   animaisController.getAnimal(req, res);
 });
 
-app.get("/users", (req, res) => {
-  app.set("layout", "./layouts/default/main");
-  usersController.usuarios(req, res);
+app.get("/editar/:id", (req, res) => {
+  animaisController.editarAnimal(req, res);
 });
 
-app.get("/users/:id", (req, res) => {
-  app.set("layout", "./layouts/default/main");
-  usersController.getUsuario(req, res);
+app.get("/excluir/:id", (req, res) => {
+  animaisController.excluirAnimal(req, res);
 });
 
-app.get("/sobre", (req, res) => {
-  app.set("layout", "./layouts/default/main");
-  res.locals.layoutVariables = {
-    usuario: req.session.usuario,
-    url: process.env.URL,
-    title: "Sobre",
-  };
-  res.render("sobre");
-});
-
-app.get("/perfil", (req, res) => {
-  app.set("layout", "./layouts/default/main");
-  usuarioController.perfil(req, res);
-});
-
-app.get("/logout", (req, res) => {
-  usuarioController.logout(req, res);
-});
-
+//server
 app.listen(PORT, () => {
   console.log(`Servidor rodando em ${HOST}:${PORT}`);
 });

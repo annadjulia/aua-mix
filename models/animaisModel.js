@@ -103,6 +103,38 @@ async function getFoto(id) {
   return resp;
 }
 
+async function editarAnimal(id) {
+  //fazer
+  console.log("Editando animal");
+  //let sql = `UPDATE animais SET disponivel = 0 WHERE id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function deletarFoto(id) {
+  console.log("Deletando foto");
+  let sql = `DELETE FROM fotos WHERE animal_id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function excluirAnimal(id) {
+  console.log("Excluindo animal");
+  try {
+    let respFoto = await deletarFoto(id);
+    if (respFoto.affectedRows == 1) {
+      console.log("Foto excluída com sucesso");
+      let sql = `DELETE FROM animais WHERE id = '${id}'`;
+      let resp = await db.query(sql);
+      return resp;
+    } else {
+      console.log("Erro ao excluir foto");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   listarAnimais,
   listarAnimaisUsuario,
@@ -111,4 +143,7 @@ module.exports = {
   //getEspecie,
   cadastrarImg,
   getFoto,
+  editarAnimal,
+  deletarFoto,
+  excluirAnimal
 };

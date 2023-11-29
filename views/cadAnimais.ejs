@@ -93,6 +93,9 @@
   </div>
 </div>
 <script>
+  const btnSubmit = document.getElementById("submit");
+  btnSubmit.disabled = false;
+
   function valido() {
     var img = document.getElementById("img-input");
     if (img.value == "") {
@@ -161,9 +164,13 @@
     });
   }
 
-  const btnSubmit = document.getElementById("submit");
   btnSubmit.addEventListener("click", function () {
     var caracteristicasInput = document.getElementById("caracteristicas-input");
     caracteristicasInput.value = JSON.stringify(caracteristicas);
+    if (caracteristicas.length == 0) {
+      alert("Adicione pelo menos uma característica!");
+      caracteristicasInput.value = "";
+      return false;
+    }
   });
 </script>

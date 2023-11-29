@@ -6,7 +6,7 @@
           <li class="list-group-item">Você não possui animais cadastrados.</li>
         </ul>
       <% } else { %>
-        <%- include('./layouts/maracutaias/animales', {animais}) %>
+        <%- include('./layouts/maracutaias/animales', {animais, page: page}) %>
       <% } %>
     </div>
 </div>

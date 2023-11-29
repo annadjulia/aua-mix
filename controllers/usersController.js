@@ -9,7 +9,7 @@ async function usuarios(req, res) {
   };
   console.log("locals: " + res.locals.layoutVariables.usuario);
   let usuarios = await usersModel.listarUsuarios();
-  console.log(usuarios);
+  usuarios.forEach(user => { console.log("id: "+user.id+" - nome: "+user.nome) });
   res.render("usuarios", { usuarios });
 }
 
@@ -28,7 +28,7 @@ async function getUsuario(req, res) {
     };
     //pegar lista de animais do usuario
     let animais = await animaisController.listarAnimaisUsuario(id);
-    console.log(animais);
+    animais.forEach(animal => { console.log("id: "+animal.id+" - nome: "+animal.nome) });
     res.render("usuario", { usuario: usuario[0], animais });
   }
 }

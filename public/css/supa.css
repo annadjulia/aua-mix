@@ -13,6 +13,8 @@ body {
   background-image: url(../media/wallpaper.png);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 .animalcard {
   transition: transform 0.3s, box-shadow 0.3s;
