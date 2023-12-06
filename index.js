@@ -33,7 +33,11 @@ cloudinary.config({
 });
 
 //session
-app.use(session({ secret: "abracadabra" }));
+app.use(session({ 
+  secret: "abracadabra",
+  resave: true,
+  saveUninitialized: true
+}));
 
 //ejs
 app.use(expressLayouts);
@@ -117,6 +121,15 @@ app.post("/cadastro", (req, res) => {
 app.get("/perfil", (req, res) => {
   app.set("layout", "./layouts/default/main");
   usuarioController.perfil(req, res);
+});
+
+app.get("/editarPerfil", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  usuarioController.editarPerfil(req, res);
+});
+
+app.post("/salvarPerfil", upload.single("foto"), (req, res) => {
+  usuarioController.salvarPerfil(req, res);
 });
 
 app.get("/logout", (req, res) => {

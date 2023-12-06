@@ -27,6 +27,8 @@ async function getUsuario(req, res) {
       title: usuario[0].nome,
     };
     //pegar lista de animais do usuario
+    let data = usuario[0].dataIngresso.getDate() + "/" + (usuario[0].dataIngresso.getMonth() + 1) + "/" + usuario[0].dataIngresso.getFullYear();
+    usuario[0].dataIngresso = data
     let animais = await animaisController.listarAnimaisUsuario(id);
     animais.forEach(animal => { console.log("id: "+animal.id+" - nome: "+animal.nome) });
     res.render("usuario", { usuario: usuario[0], animais });

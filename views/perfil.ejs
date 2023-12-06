@@ -14,18 +14,23 @@
               class="img-fluid img-cards rounded"
               style="height: fit-content; width: 100%"
               alt="..."
-            />
+            /> //TODO img height fixed
           </div>
         </div>
       </div>
       <div class="col-8">
         <div class="row">
           <div class="col-6">
-            <h1 class="slab roxo"><%- locals.layoutVariables.usuario.nome %></h1>
+            <h1 class="slab roxo"><%- locals.layoutVariables.usuario.nome %> <a href="/editarPerfil"><i class="bi bi-pencil-square roxo"></i></a></h1>
             <br>
+            <h5 class="laranja">Entrou em <%- locals.layoutVariables.usuario.dataIngresso %></h5>
             <h5 class="laranja">Mora em <%- locals.layoutVariables.usuario.cidade %></h5>
             <h5 class="laranja">E-mail: <%- locals.layoutVariables.usuario.email %></h5>
-            <h5 class="laranja">Telefone: (11) 9999-9999</h5>
+            <% if(locals.layoutVariables.usuario.telefone){ %>
+            <h5 class="laranja">Telefone: <%- locals.layoutVariables.usuario.telefone %> </h5>
+            <% } else { %>
+            <h5 class="laranja">Telefone: Não informado </h5>
+            <% } %>
             <br>
             <h3 class="slab roxo"> Animais cadastrados: <%- animais.length %></h3>
         </div>
