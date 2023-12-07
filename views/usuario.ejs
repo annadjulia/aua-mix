@@ -1,8 +1,8 @@
 <div class="row height100 rounded shadow justify-content-center bgwt p-5">
   <div class="col">
     <div class="row">
-      <div class="col-3">
-        <div class="row">
+      <div class="col-lg-3">
+        <div class="row mb-3">
           <div class="col">
             <img
               src="<%- usuario.foto %>"
@@ -13,10 +13,15 @@
           </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-lg-9">
         <div class="row">
-          <div class="col-6">
+          <div class="col-lg-6">
             <h1 class="slab roxo"><%- usuario.nome %></h1>
+            <% if(usuario.ong == true){ %>
+              <span class="badge d-flex align-items-center p-1 fundoroxo pe-2 border border-dark-subtle rounded-pill" style="width: fit-content;">
+                <img class="rounded-circle me-1" width="24" height="24" src="/media/iconbranco.png" alt="">ONG
+              </span>
+            <% } %>
             <br>
             <h5 class="laranja">Entrou em <%- usuario.dataIngresso %></h5>
             <h5 class="laranja">Mora em <%- usuario.cidade %></h5>
@@ -25,7 +30,6 @@
             <h5 class="laranja">Telefone: <%- usuario.telefone %></h5>
             <% } %>
             <br>
-            //TODO fazer icone de ong
             <h3 class="slab roxo"> Animais cadastrados: <%- animais.length %></h3>
         </div>
       </div>

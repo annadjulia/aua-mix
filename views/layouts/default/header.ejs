@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-between align-content-center">
       <a href="/" class="col-auto align-content-center d-flex" style="flex-wrap: inherit;">
-        <img src="/media/cardsemfundocerto.png" alt="Adote Um Amigo" class="img-fluid logo" style="height: 4vw;">
+        <img src="/media/cardsemfundocerto.png" alt="Adote Um Amigo" class="img-fluid logo" style="height: 2em;">
       </a>
 
       <ul class="nav col-auto justify-content-between align-content-center slab">
@@ -19,12 +19,12 @@
           <% if (locals.layoutVariables.usuario) { %>
             <div class="col-auto">
               <div class="row align-content-center height100">
-                <a href="/cadastroAnimais"><button type="button" class="btn btn-outline-primary mx-2 lara">Cadastrar
+                <a href="/cadastroAnimais"><button type="button" class="btn botaocada btn-outline-primary mx-2 lara">Cadastrar
                     animal</button></a>
               </div>
             </div>
             <div class="col-auto p-0">
-              <a href="/perfil"><i class="bi bi-person-circle roxo" style="font-size: 3vw;"></i></a>
+              <a href="/perfil"><i class="bi bi-person-circle roxo" style="font-size: 2em;"></i></a>
             </div>
 
             <% }else{ %>
@@ -33,7 +33,7 @@
                   <a href="/login"><button type="button" class="btn btn-outline-primary mx-2 lara">Entre</button></a>
                 </div>
               </div>
-              <div class="col-auto">
+              <div class="col-auto botaocada">
                 <div class="row align-content-center height100">
                   <a href="/cadastro"><button type="button" class="btn btn-primary botaoroxo">Cadastre-se</button></a>
                 </div>
@@ -50,10 +50,14 @@
     .nav {
       display: none;
     }
+    
   }
 
   @media (max-width: 800px) {
     .header-nav {
+      display: none;
+    }
+    .botaocada {
       display: none;
     }
 

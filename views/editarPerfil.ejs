@@ -24,7 +24,7 @@
                     <div class="row">
                         <label class="form-label roxo">Telefone</label>
                         <input type="text" name="telefone" class="form-control shadow-sm" id="telefone"
-                        // FIXME value vai vazio
+                     
                         <% if (usuario.telefone) { %>
                             placeholder="<%- usuario.telefone %>" 
                             value="<%- usuario.telefone %>"
@@ -50,11 +50,11 @@
                         <label class="form-label roxo">Você representa uma ONG?</label>
                         <div class="my-2">
                             <div class="form-check">
-                              <input name="ong" type="radio" class="form-check-input" value='S' required>
+                              <input name="ong" type="radio" class="form-check-input" <% if (usuario.ong) { %> checked <%}%>  value='1' required>
                               <label class="form-check-label roxo">Sim</label>
                             </div>
                             <div class="form-check">
-                              <input name="ong" type="radio" class="form-check-input" value='N' checked required>
+                              <input name="ong" type="radio" class="form-check-input" <% if(!usuario.ong) { %> checked <%}%> value='0' required>
                               <label class="form-check-label roxo">Não</label>
                             </div>
                           </div>
@@ -65,7 +65,7 @@
                     <div class="row">
                         <label class="form-label roxo">Foto de perfil</label>
                         <input id="img-input" type="file" name="foto" accept="image/*">
-                        // FIXME value vai vazio
+                    
                     </div>
                     <div class="row my-2">
                         <div class="col-6">

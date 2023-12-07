@@ -84,7 +84,9 @@ async function perfil(req, res) {
     usuario: req.session.usuario,
     url: process.env.URL,
     title: "Perfil",
+    erro: req.session.erro,
   };
+  delete req.session.erro;
   console.log("session:" + JSON.stringify(req.session.usuario));
   animais = await animaisController.listarAnimaisUsuario(req.session.usuario.id);
   animais.forEach(animal => { console.log("id: " + animal.id + " - nome: " + animal.nome) });
@@ -104,10 +106,11 @@ async function editarPerfil(req, res) {
 
 async function salvarPerfil(req, res) {
   console.log(req.body);
-  const { nome, email, telefone, cidade } = req.body;
+  const { nome, email, telefone, cidade, ong } = req.body;
   let foto = "";
   if (req.file) {
     foto = req.file.filename;
+    foto = await usuarioModel.salvarFotoCloudinary(foto);
   } else {
     foto = req.session.usuario.foto;
   }
@@ -117,7 +120,8 @@ async function salvarPerfil(req, res) {
     email,
     telefone,
     cidade,
-    foto
+    foto,
+    ong
   );
   if (resp === false) {
     console.log("Erro ao salvar perfil");
@@ -130,6 +134,7 @@ async function salvarPerfil(req, res) {
       req.session.usuario.telefone = telefone;
       req.session.usuario.cidade = cidade;
       req.session.usuario.foto = foto;
+      req.session.usuario.ong = ong;
       req.session.erro = 0;
       res.redirect("/perfil");
     } else {

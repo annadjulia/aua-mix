@@ -35,14 +35,6 @@ cloudinary.config({
 //session
 app.use(session({ 
   secret: "abracadabra",
-  resave: true,
-  saveUninitialized: true,
-  proxy: true,
-  cookie: {
-    secure: true,
-    httpOnly: false,
-    sameSite: 'none'
-  }
 }));
 
 //ejs

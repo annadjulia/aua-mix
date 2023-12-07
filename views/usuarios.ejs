@@ -2,6 +2,14 @@
   class="row rounded shadow justify-content-center bgwt p-2 mb-3 text-center"
 >
   <h1 class="slab roxo">Busca por usuários</h1>
+  <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group mb-1 mt-2">
+          <input type="text" class="border form-control" placeholder="Pesquisar por nome" id="searchInput">
+          <a href="" class="btn btn-primary botaoroxo" type="button" id="searchButton">Pesquisar</a>
+        </div>
+      </div>
+  </div>
 </div>
 <div class="row row-cols-1 row-cols-md-5 g-3">
   <% usuarios.forEach(usuario=> { %> <% if (usuario.id!=locals.layoutVariables.usuario.id || locals.layoutVariables.usuario.id == false){ %>
@@ -13,7 +21,14 @@
         alt=""
       />
       <div class="card-body rounded-bottom">
-        <h5 class="card-title roxo slab"><%- usuario.nome %></h5>
+        <h5 class="card-title d-flex align-items-center roxo slab"><%- usuario.nome %>
+        <% if(usuario.ong == true){ %>
+              <span class="badge ms-2 d-flex align-items-center p-1 fundoroxo pe-2 border border-dark-subtle rounded-pill" style="width: fit-content;">
+                <img class="rounded-circle me-1" width="24" height="24" src="/media/iconbranco.png" alt="">ONG
+              </span>
+            <% } %>
+        </h5>
+        
         <a href="/users/<%- usuario.id %>" class="btn btn-light lara mt-2">Ver mais</a>
       </div>
     </div>

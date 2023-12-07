@@ -41,6 +41,7 @@ async function cadastrarAnimal(
   sexo
 ) {
   console.log("Cadastrando animal");
+  
   let sql = `INSERT INTO animais (usuario_id, especie_id, nome, idade, caracteristicas, tamanho, sexo, disponivel, dataAdd)
     VALUES ('${id_usuario}', '${id_especie}', '${nome}', '${idade}', '${caracteristicas}', '${tamanho}', '${sexo}', 1, NOW())`;
   let resp = await db.query(sql);

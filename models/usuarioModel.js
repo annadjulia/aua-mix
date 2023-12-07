@@ -1,5 +1,8 @@
 const db = require("./db");
 const md5 = require("md5");
+const cloudinary = require("cloudinary").v2;
+const path = require("path");
+const fs = require("fs");
 
 async function verificarUsuario(email, senha) {
   console.log("Verificando usuário");
@@ -32,8 +35,15 @@ async function cadastrarUsuario(nome, email, senha) {
   return resp;
 }
 
-async function salvarPerfil(id, nome, email, telefone, cidade, foto) {
+async function salvarPerfil(id, nome, email, telefone, cidade, foto, ong) {
   console.log("Salvando perfil");
+  let sql = `UPDATE usuarios SET nome = '${nome}', email = '${email}', telefone = '${telefone}', cidade = '${cidade}', foto = '${foto}', ong = '${ong}' WHERE id = ${id}`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function salvarFotoCloudinary(foto) {
+  console.log("Salvando foto no Cloudinary");
   try {
     let rota = path.join(__dirname, "../");
     fotoUrl = await cloudinary.uploader.upload(
@@ -42,23 +52,15 @@ async function salvarPerfil(id, nome, email, telefone, cidade, foto) {
     );
     console.log(fotoUrl.secure_url);
     fs.unlinkSync(rota + "/public/uploads/" + foto);
-    respFoto = await cadastrarImg(fotoUrl.secure_url, id_animal);
-    console.log(respFoto);
-    if (respFoto.affectedRows == 1) {
-      console.log("Imagem cadastrada com sucesso");
-    } else {
-      console.log("Erro ao cadastrar imagem");
-    }
+    return fotoUrl.secure_url;
   } catch (err) {
     console.log("erro:" + err);
   }
-  let sql = `UPDATE usuarios SET nome = '${nome}', email = '${email}', telefone = '${telefone}', cidade = '${cidade}', foto = '${foto}' WHERE id = ${id}`;
-  let resp = await db.query(sql);
-  return resp;
 }
 
 module.exports = {
   verificarUsuario,
   cadastrarUsuario,
   salvarPerfil,
+  salvarFotoCloudinary,
 };

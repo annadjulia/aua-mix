@@ -1,6 +1,17 @@
-<footer class="footer mt-5 text-center bgwt shadow p-3">
+<footer class="footer container-fluid mt-5 text-center bgwt shadow p-3">
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center p-5">
+                <img src="/media/cardsemfundocerto.png" class="col-lg-3 img-fluid" alt="">
+                <% if (locals.layoutVariables.usuario) { %>
+                    <div class="col-auto">
+                      <div class="row align-content-center height100">
+                        <a href="/cadastroAnimais"><button type="button" class="btn mt-3 btn-outline-primary mx-2 lara">Cadastrar
+                            animal</button></a>
+                      </div>
+                    </div>
+                <%}%>
+        </div>
+        <div class="row mt-2">
             <div class="col-12 col-sm-6 col-md-3">
                 <h5 class="laranja">Faça parte</h5>
                 <ul class="list-unstyled">
@@ -31,8 +42,8 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-auto laranja">
-                <h6>© 2023</h6>
+            <div class="col-auto laranja mt-2">
+                <h6>Ana Júlia © 2023</h6>
             </div>
         </div>
     </div>

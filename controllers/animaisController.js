@@ -76,14 +76,18 @@ async function listarAnimaisUsuario(id) {
 }
 
 async function editarAnimal(req, res) {
+  
+  
+}
+
+async function salvarAnimal(req, res) {
   const { id } = req.params;
-  //fazer
-  let resp = await animaisModel.editarAnimal(id);
+  let resp = await animaisModel.salvarAnimal(id);
   if (resp.affectedRows > 0) {
-    console.log("Animal editado");
+    console.log("Animal salvo");
     res.redirect("/animais");
   } else {
-    console.log("Erro ao editar animal");
+    console.log("Erro ao salvar animal");
     res.redirect("/animais");
   }
 }
@@ -93,11 +97,12 @@ async function editarAnimal(req, res) {
     let resp = await animaisModel.excluirAnimal(id);
     if (resp.affectedRows > 0) {
       console.log("Animal excluído");
-      res.redirect("/animais");
+      req.session.erro = "Animal excluído";
     } else {
       console.log("Erro ao excluir animal");
-      res.redirect("/animais");
+      req.session.erro = "Erro ao excluir animal";
     }
+    res.redirect("/perfil");
   }
 
   module.exports = {
