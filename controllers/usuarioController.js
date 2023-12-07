@@ -136,6 +136,7 @@ async function salvarPerfil(req, res) {
       req.session.usuario.foto = foto;
       req.session.usuario.ong = ong;
       req.session.erro = 0;
+      console.log("session:" + JSON.stringify(req.session.usuario));
       res.redirect("/perfil");
     } else {
       console.log("Erro ao salvar perfil");
