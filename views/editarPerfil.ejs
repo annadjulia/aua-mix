@@ -27,10 +27,11 @@
                         // FIXME value vai vazio
                         <% if (usuario.telefone) { %>
                             placeholder="<%- usuario.telefone %>" 
+                            value="<%- usuario.telefone %>"
                         <% }else{ %> 
                             placeholder="Telefone"
                         <% } %>
-                            value="<%- usuario.telefone %>"  >
+                        >
                     </div>
                 </div>
 
@@ -63,7 +64,7 @@
                 <div class="col-12">
                     <div class="row">
                         <label class="form-label roxo">Foto de perfil</label>
-                        <input value="<%- usuario.foto %>" id="img-input" type="file" name="foto" accept="image/*">
+                        <input id="img-input" type="file" name="foto" accept="image/*">
                         // FIXME value vai vazio
                     </div>
                     <div class="row my-2">

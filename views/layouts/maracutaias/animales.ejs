@@ -19,10 +19,10 @@
         class="slab btn btn-light mt-2 <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>"
         >Ver mais</a>
       <% if(page=="perfil"){ %>
-        <a href="#"
+        <a href="/editarAnimal/<%- animal.id %>"
           class="slab btn btn-success mt-2"
         >Editar</a> 
-        <a href="/excluir/<%- animal.id %>"
+        <a href="/excluirAnimal/<%- animal.id %>"
         class="slab btn btn-dark mt-2"
         id="btnExcluir"
         >Excluir</a>

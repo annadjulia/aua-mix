@@ -38,6 +38,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   proxy: true,
+  cookie: {
+    secure: true,
+    httpOnly: false,
+    sameSite: 'none'
+  }
 }));
 
 //ejs
@@ -59,7 +64,9 @@ app.use(express.static(path.join(__dirname, "public")), (req, res, next) => {
     if (
       req.url == "/cadastroAnimais" ||
       req.url == "/perfil" ||
-      req.url == "/logout"
+      req.url == "/logout" ||
+      req.url == "/editarPerfil" ||
+      req.url == "/salvarPerfil"
     ) {
       res.locals.layoutVariables = {
         usuario: null,
@@ -168,11 +175,12 @@ app.get("/animais/:id", (req, res) => {
   animaisController.getAnimal(req, res);
 });
 
-app.get("/editar/:id", (req, res) => {
+app.get("/editarAnimal/:id", (req, res) => {
+  app.set("layout", "./layouts/default/main");
   animaisController.editarAnimal(req, res);
 });
 
-app.get("/excluir/:id", (req, res) => {
+app.get("/excluirAnimal/:id", (req, res) => {
   animaisController.excluirAnimal(req, res);
 });
 

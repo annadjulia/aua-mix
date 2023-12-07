@@ -4,7 +4,6 @@ const animaisController = require("./animaisController");
 let animais = [];
 
 function login(req, res) {
-  console.log(process.env.URL + "/cadastro");
   console.log(req.session.erro);
   res.locals.layoutVariables = {
     usuario: req.session.usuario,
@@ -109,6 +108,8 @@ async function salvarPerfil(req, res) {
   let foto = "";
   if (req.file) {
     foto = req.file.filename;
+  } else {
+    foto = req.session.usuario.foto;
   }
   let resp = await usuarioModel.salvarPerfil(
     req.session.usuario.id,
@@ -124,20 +125,11 @@ async function salvarPerfil(req, res) {
     res.redirect("/editarPerfil");
   } else if (resp.affectedRows > 0) {
     console.log("Perfil salvo");
-    let resp = await usuarioModel.verificarUsuario(email, senha);
-    let data = resp[0].dataIngresso.getDate() + "/" + (resp[0].dataIngresso.getMonth() + 1) + "/" + resp[0].dataIngresso.getFullYear();
-    if (resp.length > 0) {
-      req.session.usuario = {
-        id: resp[0].id,
-        nome: resp[0].nome,
-        email: resp[0].email,
-        ong: resp[0].ong,
-        dataIngresso: data,
-        telefone: resp[0].telefone,
-        foto: resp[0].foto,
-        cidade: resp[0].cidade,
-        erro: 0,
-      };
+      req.session.usuario.nome = nome;
+      req.session.usuario.email = email;
+      req.session.usuario.telefone = telefone;
+      req.session.usuario.cidade = cidade;
+      req.session.usuario.foto = foto;
       req.session.erro = 0;
       res.redirect("/perfil");
     } else {
@@ -145,7 +137,6 @@ async function salvarPerfil(req, res) {
       req.session.erro = "Erro ao salvar perfil";
       res.redirect("/editarPerfil");
     }
-  }
   }
 
   function logout(req, res) {
