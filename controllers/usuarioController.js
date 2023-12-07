@@ -86,9 +86,9 @@ async function perfil(req, res) {
     url: process.env.URL,
     title: "Perfil",
   };
-  console.log("session:"+JSON.stringify(req.session.usuario));
+  console.log("session:" + JSON.stringify(req.session.usuario));
   animais = await animaisController.listarAnimaisUsuario(req.session.usuario.id);
-  animais.forEach(animal => { console.log("id: "+animal.id+" - nome: "+animal.nome) });
+  animais.forEach(animal => { console.log("id: " + animal.id + " - nome: " + animal.nome) });
   res.render("perfil", { animais });
 }
 
@@ -99,7 +99,7 @@ async function editarPerfil(req, res) {
     title: "Editar Perfil",
   };
   let usuario = req.session.usuario;
-  console.log("session:"+JSON.stringify(req.session.usuario));
+  console.log("session:" + JSON.stringify(req.session.usuario));
   res.render("editarPerfil", { usuario });
 }
 
@@ -124,27 +124,42 @@ async function salvarPerfil(req, res) {
     res.redirect("/editarPerfil");
   } else if (resp.affectedRows > 0) {
     console.log("Perfil salvo");
-    req.session.erro = 0;
-    res.redirect("/perfil");
-  } else {
-    console.log("Erro ao salvar perfil");
-    req.session.erro = "Erro ao salvar perfil";
-    res.redirect("/editarPerfil");
+    let resp = await usuarioModel.verificarUsuario(email, senha);
+    let data = resp[0].dataIngresso.getDate() + "/" + (resp[0].dataIngresso.getMonth() + 1) + "/" + resp[0].dataIngresso.getFullYear();
+    if (resp.length > 0) {
+      req.session.usuario = {
+        id: resp[0].id,
+        nome: resp[0].nome,
+        email: resp[0].email,
+        ong: resp[0].ong,
+        dataIngresso: data,
+        telefone: resp[0].telefone,
+        foto: resp[0].foto,
+        cidade: resp[0].cidade,
+        erro: 0,
+      };
+      req.session.erro = 0;
+      res.redirect("/perfil");
+    } else {
+      console.log("Erro ao salvar perfil");
+      req.session.erro = "Erro ao salvar perfil";
+      res.redirect("/editarPerfil");
+    }
   }
-}
+  }
 
-function logout(req, res) {
-  delete req.session.usuario;
-  res.redirect("/login");
-}
+  function logout(req, res) {
+    delete req.session.usuario;
+    res.redirect("/login");
+  }
 
-module.exports = {
-  login,
-  cadastro,
-  autenticar,
-  cadastrar,
-  logout,
-  perfil,
-  editarPerfil,
-  salvarPerfil,
-};
+  module.exports = {
+    login,
+    cadastro,
+    autenticar,
+    cadastrar,
+    logout,
+    perfil,
+    editarPerfil,
+    salvarPerfil,
+  };
