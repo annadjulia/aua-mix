@@ -31,8 +31,8 @@ async function autenticar(req, res) {
   console.log(req.body);
   const { email, senha } = req.body;
   let resp = await usuarioModel.verificarUsuario(email, senha);
-  let data = resp[0].dataIngresso.getDate() + "/" + (resp[0].dataIngresso.getMonth() + 1) + "/" + resp[0].dataIngresso.getFullYear();
   if (resp.length > 0) {
+    let data = resp[0].dataIngresso.getDate() + "/" + (resp[0].dataIngresso.getMonth() + 1) + "/" + resp[0].dataIngresso.getFullYear();
     req.session.usuario = {
       id: resp[0].id,
       nome: resp[0].nome,

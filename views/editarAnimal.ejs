@@ -32,7 +32,7 @@
           <select name="id_especie" class="form-select" required>
             <option value="" selected disabled hidden>Selecione uma espécie</option>
             <% especies.forEach(especie=> { %>
-            <option value="<%- especie.id %>" <% if (especie.id === animal.id_especie) { %>selected<% } %>><%- especie.nome %></option>
+            <option value="<%- especie.id %>" <% if (especie.id == animal.id_especie) { %>selected<% } %>><%- especie.nome %></option>
             <% }); %>
           </select>
         </div> 
@@ -76,17 +76,17 @@
               placeholder="Características" maxlength="20" required>
             <button type="button" id="add-caracteristica-btn" class="btn btn-primary lara">Adicionar</button>
           </div>
-          <div class="row" id="caracteristicas-list">
-            <% animal.caracteristicas.forEach((caracteristica, i) => { %>
-            <div class="col-auto">
-              <div class="input-group mb-3 shadow-sm rounded">
-                <input name="caracteristicas" type="text" class="form-control" value="<%- caracteristica %>" readonly>
-                <button type="button" class="btn btn-danger" onclick="removeCaracteristica(<%- i %>)">Remover</button>
+            <div class="row" id="caracteristicas-list">
+              <% animal.caracteristicas.forEach((caracteristica, i) => { %>
+              <div class="col-auto">
+                <div class="input-group mb-3 shadow-sm rounded">
+                  <input name="caracteristicas" type="text" class="form-control" value="<%- caracteristica %>" readonly>
+                  <button type="button" class="btn btn-danger" onclick="removeCaracteristica('<%- i %>');">Remover</button>
+                </div>
               </div>
+              <% }); %>
             </div>
-            <% }); %>
           </div>
-        </div>
 
 
         <div class="col-12">
