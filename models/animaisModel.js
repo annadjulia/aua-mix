@@ -118,6 +118,14 @@ async function editarAnimal(id) {
   return resp;
 }
 
+async function editarAnimal(id, id_especie, nome, idade, caracteristicas, tamanho, sexo) {
+  console.log("Editando animal");
+  let sql = `UPDATE animais SET especie_id = '${id_especie}', nome = '${nome}', idade = '${idade}', caracteristicas = '${caracteristicas}', tamanho = '${tamanho}', sexo = '${sexo}' WHERE id = '${id}'`;
+  
+  let resp = await db.query(sql);
+  return resp;
+}
+
 async function deletarFoto(id) {
   console.log("Deletando foto");
   let sql = `DELETE FROM fotos WHERE animal_id = '${id}'`;

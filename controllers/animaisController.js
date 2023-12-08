@@ -89,7 +89,34 @@ async function listarAnimaisUsuario(id) {
   return animais;
 }
 
-async function editarAnimal(req, res) {}
+async function editarAnimal(req, res) {
+  const { id } = req.params;
+  let animal = await animaisModel.getAnimal(id);
+  if (animal.length == 0) {
+    res.redirect("/animais");
+  } else {
+    console.log(animal[0]);
+    console.log(animal);
+    res.locals.layoutVariables = {
+      usuario: req.session.usuario,
+      url: process.env.URL,
+      title: animal[0].nome,
+    };
+    animal[0].especie = await animaisModel.getEspecie(animal[0].especie_id);
+    animal[0].especie = animal[0].especie[0].nome;
+    let data =
+      animal[0].dataAdd.getDate() +
+      "/" +
+      (animal[0].dataAdd.getMonth() + 1) +
+      "/" +
+      animal[0].dataAdd.getFullYear();
+    animal[0].dataAdd = data;
+    animal[0].caracteristicas = JSON.parse(animal[0].caracteristicas);
+    let usuario = await usersModel.getUsuario(animal[0].usuario_id);
+    let especies = await animaisModel.getEspecies();
+    res.render("editarAnimal", { animal: animal[0], usuario: usuario[0], especies });
+  }
+}
 
 async function salvarAnimal(req, res) {
   const { id } = req.params;
@@ -140,6 +167,7 @@ module.exports = {
   listarAnimais,
   listarAnimaisUsuario,
   editarAnimal,
+  salvarAnimal,
   excluirAnimal,
   pesquisarAnimal,
 };

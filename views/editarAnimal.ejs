@@ -1,0 +1,189 @@
+<div class="row height100 rounded shadow justify-content-center bgwt p-5 slab">
+  <div class="col-md-7 col-lg-8">
+    <h3 class="mb-3 roxo">Editar animal</h3>
+    <form class="needs-validation" action="/editarAnimal" method="post" enctype="multipart/form-data"
+      onsubmit="return valido()">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label roxo">Nome do animal</label>
+          <input type="text" name="nome" class="form-control shadow-sm" placeholder="Nome" value="<%= animal.nome %>" required>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label roxo">Idade do animal</label>
+          <div class="my-2">
+            <div class="form-check">
+              <input name="idade" type="radio" class="form-check-input" value=1 <% if (animal.idade == 1) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Filhote</label>
+            </div>
+            <div class="form-check">
+              <input name="idade" type="radio" class="form-check-input" value=2 <% if (animal.idade == 2) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Adulto</label>
+            </div>
+            <div class="form-check">
+              <input name="idade" type="radio" class="form-check-input" value=3 <% if (animal.idade == 3) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Idoso</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label roxo">Espécie do animal</label>
+          <select name="id_especie" class="form-select" required>
+            <option value="" selected disabled hidden>Selecione uma espécie</option>
+            <% especies.forEach(especie=> { %>
+            <option value="<%- especie.id %>" <% if (especie.id === animal.id_especie) { %>selected<% } %>><%- especie.nome %></option>
+            <% }); %>
+          </select>
+        </div> 
+
+        <div class="col-12">
+          <label class="form-label roxo">Tamanho do animal</label>
+          <div class="my-2">
+            <div class="form-check">
+              <input name="tamanho" type="radio" class="form-check-input" value=1 <% if (animal.tamanho == 1) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Porte pequeno</label>
+            </div>
+            <div class="form-check">
+              <input name="tamanho" type="radio" class="form-check-input" value=2 <% if (animal.tamanho == 2) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Porte médio</label>
+            </div>
+            <div class="form-check">
+              <input name="tamanho" type="radio" class="form-check-input" value=3 <% if (animal.tamanho == 3) { %>checked<% } %> required>
+              <label class="form-check-label roxo">Porte grande</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label roxo">Sexo do animal</label>
+          <div class="my-2">
+            <div class="form-check">
+              <input name="sexo" type="radio" class="form-check-input" value='F' <% if (animal.sexo == 'F') { %>checked<% } %> required>
+              <label class="form-check-label roxo">Fêmea</label>
+            </div>
+            <div class="form-check">
+              <input name="sexo" type="radio" class="form-check-input" value='M' <% if (animal.sexo == 'M') { %>checked<% } %> required>
+              <label class="form-check-label roxo">Macho</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label roxo">Características do animal</label>
+          <div class="input-group mb-3 shadow-sm rounded">
+            <input name="caracteristicas" type="text" id="caracteristicas-input" class="form-control"
+              placeholder="Características" maxlength="20" required>
+            <button type="button" id="add-caracteristica-btn" class="btn btn-primary lara">Adicionar</button>
+          </div>
+          <div class="row" id="caracteristicas-list">
+            <% animal.caracteristicas.forEach((caracteristica, i) => { %>
+            <div class="col-auto">
+              <div class="input-group mb-3 shadow-sm rounded">
+                <input name="caracteristicas" type="text" class="form-control" value="<%- caracteristica %>" readonly>
+                <button type="button" class="btn btn-danger" onclick="removeCaracteristica(<%- i %>)">Remover</button>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+
+
+        <div class="col-12">
+          <div class="row">
+            <label class="form-label roxo">Foto do animal</label>
+            <input id="img-input" type="file" name="foto" accept="image/*">
+          </div>
+          <div class="row my-2">
+            <div class="col-6">
+              <img id="img-preview" src="<%- animal.foto %>" alt="Preview da imagem" style="height: fit-content;"
+                class="img-fluid img-cards rounded">
+            </div>
+          </div>
+        </div>
+        <button class="w-100 btn btn-primary btn-lg mb-3 lara" id="submit" type="submit">Salvar alterações</button>
+    </form>
+  </div>
+</div>
+<script>
+  const btnSubmit = document.getElementById("submit");
+  btnSubmit.disabled = false;
+
+  function valido() {
+    var img = document.getElementById("img-input");
+    if (img.value == "") {
+      alert("Selecione uma imagem!");
+      return false;
+    } else if (img.files[0].size > 1000000) {
+      alert("Imagem muito grande!");
+      return false;
+    }
+    return true;
+  }
+
+  var imgInput = document.getElementById("img-input");
+  var imgPreview = document.getElementById("img-preview");
+  addEventListener("load", function () {
+    imgInput.addEventListener("change", function () {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+          imgPreview.setAttribute("src", this.result);
+        });
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+
+  var addCaracteristicaBtn = document.getElementById("add-caracteristica-btn");
+  var caracteristicasInput = document.getElementById("caracteristicas-input");
+  let caracteristicas = [];
+  var caracteristicasList = document.getElementById("caracteristicas-list");
+
+  addCaracteristicaBtn.addEventListener("click", function () {
+    if (caracteristicas.length >= 10) {
+      alert("Você já adicionou o número máximo de características!");
+      return;
+    }
+    var caracteristica = caracteristicasInput.value;
+    if (caracteristica.trim() !== "") {
+      caracteristicas.push(caracteristica);
+      let i = caracteristicas.indexOf(caracteristica);
+      caracteristicasList.innerHTML += `
+        <div class="col-auto">
+          <div class="input-group mb-3 shadow-sm rounded">
+            <input name="caracteristicas" type="text" class="form-control" value="${caracteristica}" readonly>
+            <button type="button" class="btn btn-danger" onclick="removeCaracteristica(${i})">Remover</button>
+          </div>
+        </div>
+      `;
+      caracteristicasInput.value = "";
+    }
+  });
+
+  function removeCaracteristica(i) {
+    caracteristicas.splice(i, 1);
+    caracteristicasList.innerHTML = "";
+    caracteristicas.forEach((caracteristica, i) => {
+      caracteristicasList.innerHTML += `
+        <div class="col-auto">
+          <div class="input-group mb-3 shadow-sm rounded">
+            <input name="caracteristicas" type="text" class="form-control" value="${caracteristica}" readonly>
+            <button type="button" class="btn btn-danger" onclick="removeCaracteristica(${i})">Remover</button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  btnSubmit.addEventListener("click", function () {
+    var caracteristicasInput = document.getElementById("caracteristicas-input");
+    caracteristicasInput.value = JSON.stringify(caracteristicas);
+    if (caracteristicas.length == 0) {
+      alert("Adicione pelo menos uma característica!");
+      caracteristicasInput.value = "";
+      return false;
+    }
+  });
+</script>
