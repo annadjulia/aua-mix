@@ -10,6 +10,7 @@
       class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>"
     >
       <h5 class="card-title fofo slab"><%- animal.nome %></h5>
+      <span class="badge rounded-pill lara p-2"><%- animal.especie %></span>
       <p class="card-text fofo mb-1">
         <%- include('idade', {animal: animal}) %> | <%- include('sexo', {animal:
         animal}) %> | <%- include('tamanho', {animal: animal}) %>
@@ -29,7 +30,6 @@
         <a href="#"
         class="slab btn btn-primary mt-2"
         >Adotado</a>
-        //TODO fazer funcionar
       <% } %>
     </div>
   </div>
@@ -41,7 +41,7 @@
   //  e.preventDefault();
     //swal
   //});
-  //TODO fazer o swal
+
 
 </script>
 <style>

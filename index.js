@@ -172,8 +172,17 @@ app.get("/editarAnimal/:id", (req, res) => {
   animaisController.editarAnimal(req, res);
 });
 
+app.post("/salvarAnimal", upload.single("foto"), (req, res) => {
+  animaisController.salvarAnimal(req, res);
+});
+
 app.get("/excluirAnimal/:id", (req, res) => {
   animaisController.excluirAnimal(req, res);
+});
+
+app.get("/pesquisarAnimal", (req, res) => {
+  app.set("layout", "./layouts/default/main");
+  animaisController.pesquisarAnimal(req, res);
 });
 
 //server

@@ -12,14 +12,20 @@
         
       </div>
       <div class="col-lg-7">
-        <div class="row rounded shadow justify-content-center bgwt p-5">
+        <div class="row rounded shadow  bgwt p-5">
           <h2 class="card-title slab <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>"><%- animal.nome %></h5>
+            <div>
+              <span class="w-auto f-start badge rounded-pill <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> lara <% } %> p-2"><%- animal.especie %></span>  
+              <p></p>
+            </div>
+            
             <p class="card-text">
               <%- include('./layouts/maracutaias/idade', {animal: animal}) %> | 
               <%- include('./layouts/maracutaias/sexo', {animal: animal}) %> | 
               <%- include('./layouts/maracutaias/tamanho', {animal: animal}) %> porte
             </p>
             <div>
+              <p class="m-0 slab <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>">Características do animal</p>
               <%- include('./layouts/maracutaias/caracteristicas', {caracteristicas: animal.caracteristicas}) %>
             </div>
             <a onclick="adotar('<%- animal%>','<%- usuario %>')"
@@ -43,11 +49,13 @@
   <div class="col-6">
     <div class="row rounded shadow justify-content-center bgwt p-5">
       <div class="col">
-        <i class="bi bi-x-circle-fill laranja"></i>
-        <h1>Contato para adoção</h1>
-        <h1>Nome: <%- usuario.nome %></h1>
-        <h1>Email: <%- usuario.email %></h1>
-        <h1>Telefone: <%- usuario.telefone %></h1>
+        <a href=""><i class="bi bi-x-circle-fill <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>" style="font-size: 1.5em;"></i></a>
+        <h1 class="slab <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %> text-center">Contato para adoção</h1>
+        <h3>Dono do animal: <a href="/users/<%- usuario.id %>"><%- usuario.nome %></a></h3>
+        <h3>Email: <%- usuario.email %></h3>
+        <% if(usuario.telefone){ %>
+          <h3 class="laranja">Telefone: <%- usuario.telefone %></h3>
+          <% } %>
       </div>
     </div>
   </div>

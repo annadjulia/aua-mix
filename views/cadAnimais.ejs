@@ -29,8 +29,13 @@
 
         <div class="col-12">
           <label class="form-label roxo">Espécie do animal</label>
-          <input type="text" name="especie" class="form-control shadow-sm" placeholder="Espécie" required>
-        </div> //TODO fazer dropdown  
+          <select name="id_especie" class="form-select" required>
+            <option value="" selected disabled hidden>Selecione uma espécie</option>
+            <% especies.forEach(especie=> { %>
+            <option value="<%- especie.id %>"><%- especie.nome %></option>
+            <% }); %>
+          </select>
+        </div> 
 
         <div class="col-12">
           <label class="form-label roxo">Tamanho do animal</label>
@@ -76,7 +81,6 @@
           </div>
         </div>
 
-        //TODO historia do animal
 
         <div class="col-12">
           <div class="row">

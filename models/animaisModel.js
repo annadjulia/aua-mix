@@ -81,13 +81,19 @@ async function getAnimal(id) {
   return resp;
 }
 
-/*async function getEspecie(id) {
+async function getEspecie(id) {
   console.log("Buscando espécie");
-  let sql = `SELECT * FROM especies WHERE id = '${id}'`;
+  let sql = `SELECT nome FROM especies WHERE id = '${id}'`;
   let resp = await db.query(sql);
-  console.log("getespecie: "+resp);
   return resp;
-}*/
+}
+
+async function getEspecies() {
+  console.log("Buscando espécies");
+  let sql = `SELECT * FROM especies`;
+  let resp = await db.query(sql);
+  return resp;
+}
 
 async function cadastrarImg(foto, id_animal) {
   console.log("Cadastrando imagem");
@@ -136,15 +142,32 @@ async function excluirAnimal(id) {
   }
 }
 
+async function pesquisarAnimal(search){
+  console.log("Pesquisando animal");
+  let sql = `SELECT animais.*, fotos.url FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                WHERE animais.nome LIKE '%${search}%' ||
+                animais.caracteristicas LIKE '%${search}%'
+                ORDER BY animais.id DESC`;
+  try {
+    let resp = await db.query(sql);
+    return resp;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   listarAnimais,
   listarAnimaisUsuario,
   cadastrarAnimal,
   getAnimal,
-  //getEspecie,
+  getEspecie,
+  getEspecies,
   cadastrarImg,
   getFoto,
   editarAnimal,
   deletarFoto,
-  excluirAnimal
+  excluirAnimal,
+  pesquisarAnimal,
 };
