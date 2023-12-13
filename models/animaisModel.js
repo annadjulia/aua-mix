@@ -1,66 +1,181 @@
-const db = require('./db');
+const db = require("./db");
+const cloudinary = require("cloudinary").v2;
+const path = require("path");
+const fs = require("fs");
 
-async function listarAnimais(){
-    console.log('Listando animais');
-    let sql = `SELECT * FROM animais ORDER BY id DESC`;
+async function listarAnimais() {
+  console.log("Listando animais");
+  let sql = `SELECT animais.*, fotos.url FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                ORDER BY animais.id DESC`;
+  try {
     let resp = await db.query(sql);
     return resp;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-async function cadastrarAnimal(id_usuario, id_especie, nome, idade, caracteristicas){
-    console.log('Cadastrando animal');
-    let sql = `INSERT INTO animais (usuario_id, especie_id, nome, idade, detalhes, disponivel)
-    VALUES ('${id_usuario}', '${id_especie}', '${nome}', '${idade}', '${caracteristicas}', 1)`;
-    let resp = await db.query(sql);
-    console.log(resp);
-    return resp;
-}
-
-async function getAnimal(id){
-    console.log('Buscando animal');
-    let sql = `SELECT * FROM animais WHERE id = '${id}'`;
+async function listarAnimaisUsuario(id) {
+  console.log("Listando animais usuario");
+  let sql = `SELECT animais.*, fotos.url FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                WHERE animais.usuario_id = '${id}'
+                ORDER BY animais.id DESC`;
+  try {
     let resp = await db.query(sql);
     return resp;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-/*
-async function cadastrarEspecie(nome){
-    console.log('Cadastrando espécie');
-    let sql = `SELECT * FROM especies WHERE nome = '${nome}'`;
-    let resp = await db.query(sql);
-    if(resp.length > 0){
-        console.log('Espécie já cadastrada');
-        console.log(resp);
-        return resp[0].id;
-    }else{
-        console.log('Espécie não cadastrada');
-        sql = `INSERT INTO especies (nome) VALUES ('${nome}')`;
-        resp = await db.query(sql);
-        console.log(resp);
-        return resp[0].insertId;
+async function cadastrarAnimal(
+  id_usuario,
+  id_especie,
+  nome,
+  idade,
+  caracteristicas,
+  foto,
+  tamanho,
+  sexo
+) {
+  console.log("Cadastrando animal");
+  
+  let sql = `INSERT INTO animais (usuario_id, especie_id, nome, idade, caracteristicas, tamanho, sexo, disponivel, dataAdd)
+    VALUES ('${id_usuario}', '${id_especie}', '${nome}', '${idade}', '${caracteristicas}', '${tamanho}', '${sexo}', 1, NOW())`;
+  let resp = await db.query(sql);
+  console.log(resp);
+  let id_animal = resp.insertId;
+  console.log(id_animal);
+  let fotoUrl, respFoto;
+  foto = foto.filename;
+  try {
+    let rota = path.join(__dirname, "../");
+    fotoUrl = await cloudinary.uploader.upload(
+      rota + "/public/uploads/" + foto,
+      { folder: "media-AUA" }
+    );
+    console.log(fotoUrl.secure_url);
+    fs.unlinkSync(rota + "/public/uploads/" + foto);
+    respFoto = await cadastrarImg(fotoUrl.secure_url, id_animal);
+    console.log(respFoto);
+    if (respFoto.affectedRows == 1) {
+      console.log("Imagem cadastrada com sucesso");
+    } else {
+      console.log("Erro ao cadastrar imagem");
     }
-}*/
+  } catch (err) {
+    console.log("erro:" + err);
+  }
 
-async function getEspecie(id){
-    console.log('Buscando espécie');
-    let sql = `SELECT * FROM especies WHERE id = '${id}'`;
-    let resp = await db.query(sql);
-    return resp;
+  return resp;
 }
 
-async function cadastrarImg(foto, id_animal){
-    console.log('Cadastrando imagem');
-    let sql = `INSERT INTO fotos (animal_id, url) VALUES ('${id_animal}', '${foto}')`;
-    let resp = await db.query(sql);
-    console.log(resp);
-    return resp;
+async function getAnimal(id) {
+  console.log("Buscando animal");
+  let sql = `SELECT animais.*, fotos.url FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id 
+                WHERE animais.id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
 }
 
-async function getFoto(id){
-    console.log('Buscando foto');
-    let sql = `SELECT * FROM fotos WHERE animal_id = '${id}'`;
-    let resp = await db.query(sql);
-    return resp;
+async function getEspecie(id) {
+  console.log("Buscando espécie");
+  let sql = `SELECT nome FROM especies WHERE id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
 }
 
-module.exports = { listarAnimais, cadastrarAnimal, getAnimal,  getEspecie, cadastrarImg, getFoto };
+async function getEspecies() {
+  console.log("Buscando espécies");
+  let sql = `SELECT * FROM especies`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function cadastrarImg(foto, id_animal) {
+  console.log("Cadastrando imagem");
+  let sql = `INSERT INTO fotos (animal_id, url) VALUES ('${id_animal}', '${foto}')`;
+  let resp = await db.query(sql);
+  console.log(resp);
+  return resp;
+}
+
+async function getFoto(id) {
+  console.log("Buscando foto");
+  let sql = `SELECT * FROM fotos WHERE animal_id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function editarAnimal(id) {
+  //fazer
+  console.log("Editando animal");
+  //let sql = `UPDATE animais SET disponivel = 0 WHERE id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function editarAnimal(id, id_especie, nome, idade, caracteristicas, tamanho, sexo) {
+  console.log("Editando animal");
+  let sql = `UPDATE animais SET especie_id = '${id_especie}', nome = '${nome}', idade = '${idade}', caracteristicas = '${caracteristicas}', tamanho = '${tamanho}', sexo = '${sexo}' WHERE id = '${id}'`;
+  
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function deletarFoto(id) {
+  console.log("Deletando foto");
+  let sql = `DELETE FROM fotos WHERE animal_id = '${id}'`;
+  let resp = await db.query(sql);
+  return resp;
+}
+
+async function excluirAnimal(id) {
+  console.log("Excluindo animal");
+  try {
+    let respFoto = await deletarFoto(id);
+    if (respFoto.affectedRows == 1) {
+      console.log("Foto excluída com sucesso");
+      let sql = `DELETE FROM animais WHERE id = '${id}'`;
+      let resp = await db.query(sql);
+      return resp;
+    } else {
+      console.log("Erro ao excluir foto");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function pesquisarAnimal(search){
+  console.log("Pesquisando animal");
+  let sql = `SELECT animais.*, fotos.url FROM animais 
+                INNER JOIN fotos on fotos.animal_id = animais.id
+                WHERE animais.nome LIKE '%${search}%' ||
+                animais.caracteristicas LIKE '%${search}%'
+                ORDER BY animais.id DESC`;
+  try {
+    let resp = await db.query(sql);
+    return resp;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = {
+  listarAnimais,
+  listarAnimaisUsuario,
+  cadastrarAnimal,
+  getAnimal,
+  getEspecie,
+  getEspecies,
+  cadastrarImg,
+  getFoto,
+  editarAnimal,
+  deletarFoto,
+  excluirAnimal,
+  pesquisarAnimal,
+};

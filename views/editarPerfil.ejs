@@ -1,0 +1,117 @@
+<div class="row height100 rounded shadow justify-content-center bgwt p-5 slab">
+    <div class="col-md-7 col-lg-8">
+        <h3 class="mb-3 roxo">Edite seu perfil</h3>
+        <form class="needs-validation" action="/salvarPerfil" method="post" enctype="multipart/form-data"
+            onsubmit="return valido()">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">Nome</label>
+                        <input type="text" name="nome" class="form-control shadow-sm" placeholder="<%- usuario.nome %>"
+                            required value="<%- usuario.nome %>">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">Email</label>
+                        <input type="email" name="email" class="form-control shadow-sm"
+                            placeholder="<%- usuario.email %>" required value="<%- usuario.email %>">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">Telefone</label>
+                        <input type="text" name="telefone" class="form-control shadow-sm" id="telefone"
+                     
+                        <% if (usuario.telefone) { %>
+                            placeholder="<%- usuario.telefone %>" 
+                            value="<%- usuario.telefone %>"
+                        <% }else{ %> 
+                            placeholder="Telefone"
+                        <% } %>
+                        >
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">
+                            Cidade
+                        </label>
+                        <input type="text" name="cidade" class="form-control shadow-sm"
+                            placeholder="<%- usuario.cidade %>" required value="<%- usuario.cidade %>">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">Você representa uma ONG?</label>
+                        <div class="my-2">
+                            <div class="form-check">
+                              <input name="ong" type="radio" class="form-check-input" <% if (usuario.ong) { %> checked <%}%>  value='1' required>
+                              <label class="form-check-label roxo">Sim</label>
+                            </div>
+                            <div class="form-check">
+                              <input name="ong" type="radio" class="form-check-input" <% if(!usuario.ong) { %> checked <%}%> value='0' required>
+                              <label class="form-check-label roxo">Não</label>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <label class="form-label roxo">Foto de perfil</label>
+                        <input id="img-input" type="file" name="foto" accept="image/*">
+                    
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-6">
+                            <img id="img-preview" src="<%- usuario.foto %>" alt="Preview da imagem"
+                                style="height: fit-content;" class="img-fluid img-cards rounded">
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg mb-3 lara" id="submit" type="submit">
+                    Salvar alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const btnSubmit = document.getElementById("submit");
+    var telefone = document.getElementById("telefone");
+    
+    btnSubmit.disabled = false;
+
+    function valido() {
+        var img = document.getElementById("img-input");
+        let imgPreview = document.getElementById("img-preview");
+
+        if (img.files[0].size > 1000000) {
+            alert("Imagem muito grande!");
+            img.value = "<%- usuario.foto %>";
+            imgPreview.setAttribute("src", "<%- usuario.foto %>");
+            return false;
+        }
+        return true;
+    }
+
+    var imgInput = document.getElementById("img-input");
+    var imgPreview = document.getElementById("img-preview");
+    addEventListener("load", function () {
+        imgInput.addEventListener("change", function () {
+            var file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.addEventListener("load", function () {
+                    imgPreview.setAttribute("src", this.result);
+                });
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

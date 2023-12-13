@@ -1,14 +1,27 @@
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <% animais.forEach(animal => { %> 
-  <div class="col">
-    <div class="card h-100">
-      <img src="<%- animal.foto %>" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title"><%- animal.nome %></h5>
-        <p class="card-text"><%- animal.idade %> | <%- animal.especie %> | <%- animal.detalhes %></p>
-        <a href="/animais/<%- animal.id %>" class="btn btn-primary lara">Ver mais</a>
+<div
+  class="row rounded shadow justify-content-center bgwt p-2 mb-3 text-center"
+>
+  <h1 class="slab roxo">Amigos para adoção</h1>
+</div>
+<div class="row">
+  <div class="col-lg-3">
+    <div class="row rounded shadow bgwt">
+      <div class="col">
+        <div class="row"><img src="/media/logo.png" alt=""></div>
+        <div class="row"></div>
+        <div class="row"></div>
       </div>
     </div>
   </div>
-  <% }); %> 
+  <div class="col-lg-9">
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-3">
+      <%- include('./layouts/maracutaias/animales', {animais: animais, page: "animais"}) %>
+    </div>
+  </div>
 </div>
+<script>
+
+</script>
+<style>
+
+</style>

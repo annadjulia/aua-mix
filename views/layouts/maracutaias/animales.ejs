@@ -1,0 +1,53 @@
+<% animais.forEach(animal=> { %>
+<div class="col-lg-3 rounded animalcard">
+  <div class="card h-100 shadow-sm">
+    <img
+      src="<%- animal.url %>"
+      class="card-img-top img-fluid img-cards"
+      alt=""
+    />
+    <div
+      class="card-body rounded-bottom <% if(animal.sexo=='F'){ %> fundoroxo <% }else{ %> fundolaranja <% } %>"
+    >
+      <h5 class="card-title fofo slab"><%- animal.nome %></h5>
+      <span class="badge rounded-pill lara p-2"><%- animal.especie %></span>
+      <p class="card-text fofo mb-1">
+        <%- include('idade', {animal: animal}) %> | <%- include('sexo', {animal:
+        animal}) %> | <%- include('tamanho', {animal: animal}) %>
+      </p>
+      <a
+        href="/animais/<%- animal.id %>"
+        class="slab btn btn-light mt-2 <% if(animal.sexo=='F'){ %> roxo <% }else{ %> laranja <% } %>"
+        >Ver mais</a>
+      <% if(page=="perfil"){ %>
+        <a href="/editarAnimal/<%- animal.id %>"
+          class="slab btn btn-success mt-2"
+        >Editar</a> 
+        <a href="/excluirAnimal/<%- animal.id %>"
+        class="slab btn btn-dark mt-2"
+        id="btnExcluir"
+        >Excluir</a>
+        <a href="#"
+        class="slab btn btn-primary mt-2"
+        >Adotado</a>
+      <% } %>
+    </div>
+  </div>
+</div>
+<% }); %>
+<script>
+  const btnExcluir = document.getElementById('btnExcluir');
+ // btnExcluir.addEventListener('click', (e) => {
+  //  e.preventDefault();
+    //swal
+  //});
+
+
+</script>
+<style>
+  @media (max-width: 800px) {
+    .img-cards {
+      height: 70vw;
+    }
+  }
+</style>
